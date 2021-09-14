@@ -33,6 +33,8 @@ def init_data(region):
 
     lists = elements.find_elements_by_tag_name('li')
     idx = 1
+    
+
     for li in iter(lists):
         chargeName = li.get_attribute("data-title")
         address = driver.find_element_by_css_selector("#ct > div.search_listview._content._ctList > ul > li:nth-child({}) > div.item_info > div.item_info_inn > div > a".format(idx))

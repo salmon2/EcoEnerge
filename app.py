@@ -1,5 +1,7 @@
 from types import MethodType
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+
 import datetime
 import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
@@ -7,14 +9,13 @@ from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import search_charge
 import math
+import json
 
 
 app = Flask(__name__)
 
-
-client = MongoClient('localhost', 27017)
+client = MongoClient('localhost', 27017 )
 db = client.EcoEnerge
-
 
 @app.route('/')
 def home():
@@ -28,41 +29,107 @@ def init():
     return jsonify({'result': 'success', 'msg': "성공"})
     
 
-@app.route('/api/charges', methods = ['GET'])
+@app.route('/api/chargeList', methods = ['GET'])
 def get_charges():
     page = request.args.get('page', type=int, default=1)  # 페이지
     print("page", page)
 
-    size = 10
+    size = 9
 
     # board컬럭션에 있는 모든 데이터를 가져옴
-    datas = db.chargeList.find({}).skip((page - 1) * size).limit(size)  
-
+    datas = db.chargeList.find({}).skip((page - 1) * size).limit(size)
+    
     # 게시물의 총 개수 세기
     tot_count = db.chargeList.find({}).count()
     # 마지막 페이지의 수 구하기
     last_page_num = math.ceil(tot_count / size) # 반드시 올림을 해줘야함
 
-     # 페이지 블럭을 5개씩 표기
-    block_size = 5
-    # 현재 블럭의 위치 (첫 번째 블럭이라면, block_num = 0)
-    block_num = int((page - 1) / block_size)
-    # 현재 블럭의 맨 처음 페이지 넘버 (첫 번째 블럭이라면, block_start = 1, 두 번째 블럭이라면, block_start = 6)
-    block_start = (block_size * block_num) + 1
-    # 현재 블럭의 맨 끝 페이지 넘버 (첫 번째 블럭이라면, block_end = 5)
-    block_end = block_start + (block_size - 1)
+    json_object = {
+        'size': size,
+        'currentPage' : page,
+        'maxPage': last_page_num,
+    }
 
-    print("block_size", block_size)
-    print("block_num", block_num)
-    print("block_start", block_start)
-    print("block_end", block_end)
-    print("datas", datas[0])
+    json_string = json.dumps(json_object)
 
+    # return jsonify({'result': 'success'})
+    return render_template("dummy_charges.html", info = json_string, data = datas)
+
+@app.route('/api/charge', methods = ['GET'])
+def charge():
+    print("charge_one")
     
+    chargeId = request.args.get("chargeId")
+    print(chargeId)
+    chargeId = chargeId[10:-2]
+    print(chargeId)
+    print(type(chargeId))
+    # chargeId = chargeId[]
     
-    return jsonify({'result': 'success'})
 
-#    return render_template("index.html", words = charges)
+    charge = db.chargeList.find_one({'_id': ObjectId(chargeId)})
+    reviews = db.review.find({'chargeId': ObjectId(chargeId)})
+
+
+    print(charge)
+    print(reviews[0])
+
+    return render_template("dummy_charge.html", charge = charge, reviews = reviews)
+
+@app.route('/api/review', methods = ['POST'])
+def review_save():
+
+    memberId = request.form["memberId"]
+    chargeId = request.form["chargeId"]
+   
+    rate = request.form["rate"]
+    contents = request.form["contents"]
+    like = request.form["like"]
+
+
+    doc = {
+        "memberId": memberId,
+        "chargeId": chargeId,
+
+        "rate" : rate,
+        "contents":contents,
+        "like" : like
+    }
+
+    db.review.insert_one(doc)
+
+    return jsonify({'result': 'success', 'msg': f'리뷰 저장!'})
+
+
+@app.route('/api/review/update', methods = ['POST'])
+def review_update():
+    review_id = request.form["_id"]
+    review_id = review_id[10:-2]
+
+    rate = request.form["rate"]
+    contents = request.form["contents"]
+    like = request.form["like"]
+
+
+    db.review.update({"_id": ObjectId(review_id) }, {"$set":{
+                                                            "rate" : rate,
+                                                            "contents": contents,
+                                                            "like" : like
+                                                        }
+                                                }
+                    )
+
+    return jsonify({'result': 'success', 'msg': f'리뷰 수정 완료!'})
+
+@app.route('/api/review/delete', methods = ['POST'] )
+def review_delete():
+    review_id = request.form["_id"]
+    review_id = review_id[10:-2]
+
+    db.review.delete_one({"_id": ObjectId(review_id)})
+
+    return jsonify({'result': 'success', 'msg': f'리뷰 삭제 완료!'})
+
 
 
 
