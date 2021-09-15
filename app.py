@@ -82,13 +82,6 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 
-@app.route('/')
-def home():
-    return render_template("index.html")
-
-@app.route('/login')
-def login():
-    return render_template("login.html")
 
 @app.route('/charge_list')
 def charge_list():
