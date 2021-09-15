@@ -16,7 +16,6 @@ app = Flask(__name__)
 
 SECRET_KEY = 'SPARTA'
 
-
 client = MongoClient('localhost', 27017)
 db = client.EcoEnerge
 # 토큰 가져오기
@@ -100,19 +99,25 @@ def chargeList():
     print("page", page)
     print("key", key)
     size = 9
-
-    # board컬럭션에 있는 모든 데이터를 가져옴
-    data = db.chargeList.find({"address":{"$regex": key}}).skip((page - 1) * size).limit(size)
+    try:
+        # board컬럭션에 있는 모든 데이터를 가져옴
+        data = db.chargeList.find({"address":{"$regex": key}}).skip((page - 1) * size).limit(size)
+        # 게시물의 총 개수 세기
+        tot_count = db.chargeList.count_documents({"address":{"$regex": key}})
+    # 마지막 페이지의 수 구하기
+    except Exception as e:
+        print("An exception occurred ::", e)
+        return jsonify({'result' : 'fail', 'msg' : '리뷰 목록 조회 실패'})
+    last_page_num = math.ceil(tot_count / size)  # 반드시 올림을 해줘야함
+    
+    #Objectid to str
     chargeList = []
     for charge in data:
         charge["_id"] = str(charge["_id"])
         chargeList.append(charge)
         print(charge)
-    # 게시물의 총 개수 세기
-    tot_count = db.chargeList.count_documents({"address":{"$regex": key}})
-    # 마지막 페이지의 수 구하기
-    last_page_num = math.ceil(tot_count / size)  # 반드시 올림을 해줘야함
-
+    
+    #python document to json
     info = {
         'size': size,
         'currentPage': page,
@@ -125,16 +130,19 @@ def chargeList():
 
 @app.route('/charge', methods = ['GET'])
 def charge():
-    print("charge_one")
-    
     chargeId = request.args.get("id")
 
-    charge = db.chargeList.find_one({'_id': ObjectId(chargeId)})
+    try:
+        charge = db.chargeList.find_one({'_id': ObjectId(chargeId)})
+        row_reviewList = db.review.find({'chargeId': ObjectId(chargeId)})
+    except Exception as e:
+        return jsonify({'result' : 'fail', 'msg' : '리뷰 조회 실패'})
+    
+    # Objectid to String
     charge['_id'] = str(charge['_id'])
-    
-    
+
+    # Objectid to pythondocument
     reviewList = []
-    row_reviewList = db.review.find({'chargeId': ObjectId(chargeId)})
     for review in row_reviewList:
         review['_id'] = str(review['_id'])
         review['chargeId'] = str(review['chargeId'])
@@ -146,6 +154,7 @@ def charge():
 
 @app.route('/review', methods=['POST'])
 def review_save():
+
     token_receive = request.cookies.get('mytoken')
     chargeId = request.form["chargeId"]
     rate = request.form["rate"]
@@ -168,7 +177,7 @@ def review_save():
         db.review.insert_one(doc)
 
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("charge", id = chargeId))
+        return jsonify({'result' : 'fail', 'msg' : '리뷰 저장 실패'})
 
     return redirect(url_for("login"))
 
@@ -180,22 +189,27 @@ def review_update():
     contents = request.form["contents"]
     like = request.form["like"]
 
-    db.review.update({"_id": ObjectId(review_id)}, {"$set": {
-                                                            "rate": rate,
-                                                            "contents": contents,
-                                                            "like": like
+    try:
+        db.review.update({"_id": ObjectId(review_id)}, {"$set": {
+                                                                "rate": rate,
+                                                                "contents": contents,
+                                                                "like": like
+                                                                }
                                                             }
-                                                        }
-                    )
-
+                        )
+    except Exception as e:
+        print("An exception occurred ::", e)
+        return jsonify({'result' : 'fail', 'msg' : '리뷰 수정 실패'})
+        
     return redirect(url_for("charge", id = "charge_id"))
 
 @app.route('/review/delete', methods = ['POST'] )
 def review_delete():
     review_id = request.form["_id"]
-
-    db.review.delete_one({"_id": ObjectId(review_id)})
-
+    try:
+        db.review.delete_one({"_id": ObjectId(review_id)})
+    except Exception as e:
+        return jsonify({'result' : 'fail', 'msg' : '리뷰 삭제 실패'})
     return jsonify({'result': 'success', 'msg': '리뷰 삭제 완료!'})
 
 
