@@ -45,7 +45,7 @@ def sign_in():
 
     if result is not None:
         payload = {
-            'id': username_receive,
+            'id': username_receive, 
             # 로그인 24시간 유지
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
         }
@@ -74,6 +74,7 @@ def sign_up():
 def check_dup():
     username_receive = request.form['username_give']
     exists = bool(db.users.find_one({"username": username_receive}))
+    
     return jsonify({'result': 'success', 'exists': exists})
 
 

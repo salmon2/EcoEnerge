@@ -25,9 +25,8 @@
     </head>
     <body>
         <p>{{info}}</p>
-        {% for charge in data%}
-            <p>{{charge.chargeName}}</p>
+        {% for charge in chargeList %}
+            <p>{{charge}}</p>
         {% endfor %}
-        
     </body>
 </html>
