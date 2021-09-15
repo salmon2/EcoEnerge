@@ -42,7 +42,7 @@ def login():
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
     username_receive = request.form['username_give']
-    password_receive = request.form['password.give']
+    password_receive = request.form['password_give']
 
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'username': username_receive, 'password': pw_hash})
@@ -82,12 +82,6 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 
-
-@app.route('/charge_list')
-def charge_list():
-    return render_template("charge_list.html")
-
-
 @app.route('/search', methods =['POST'])
 def search():
     city_receive = request.form['city_give']
@@ -105,19 +99,20 @@ def init():
 @app.route('/chargeList', methods = ['GET'])
 def chargeList():
     page = request.args.get('page', type=int, default=1)  # 페이지
+    key = request.args.get('key')
     print("page", page)
-
+    print("key", key)
     size = 9
 
     # board컬럭션에 있는 모든 데이터를 가져옴
-    data = db.chargeList.find({}).skip((page - 1) * size).limit(size)
+    data = db.chargeList.find({"address":{"$regex": key}}).skip((page - 1) * size).limit(size)
     chargeList = []
     for charge in data:
         charge["_id"] = str(charge["_id"])
         chargeList.append(charge)
-        
+        print(charge)
     # 게시물의 총 개수 세기
-    tot_count = db.chargeList.find({}).count()
+    tot_count = db.chargeList.count_documents({"address":{"$regex": key}})
     # 마지막 페이지의 수 구하기
     last_page_num = math.ceil(tot_count / size)  # 반드시 올림을 해줘야함
 
@@ -126,9 +121,10 @@ def chargeList():
         'currentPage': page,
         'maxPage': last_page_num,
     }
-    json_string = json.dumps(info)
+    json_info = json.dumps(info)
 
-    return render_template("dummy_charges.html", info = json_string, chargeList = chargeList)
+
+    return render_template("dummy_charges.html", info = json_info, chargeList = chargeList)
 
 @app.route('/charge', methods = ['GET'])
 def charge():
