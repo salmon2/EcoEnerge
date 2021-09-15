@@ -126,7 +126,7 @@ def chargeList():
     json_info = json.dumps(info)
 
 
-    return render_template("dummy_charges.html", info = json_info, chargeList = chargeList)
+    return render_template("chargeList.html", info = json_info, chargeList = chargeList)
 
 @app.route('/charge', methods = ['GET'])
 def charge():
@@ -149,7 +149,7 @@ def charge():
         reviewList.append(review)
 
 
-    return render_template("dummy_charge.html", charge = charge, reviewList = reviewList)
+    return render_template("charge_detail.html", charge = charge, reviewList = reviewList)
 
 
 @app.route('/review', methods=['POST'])
