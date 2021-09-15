@@ -11,25 +11,45 @@ import chargeList_maker
 import math
 import json
 
-
 app = Flask(__name__)
 
-client = MongoClient('localhost', 27017 )
+client = MongoClient('localhost', 27017)
 db = client.EcoEnerge
+
 
 @app.route('/')
 def home():
     return render_template("index.html")
 
-@app.route('/init', methods = ['POST'])
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
+@app.route('/charge_list')
+def charge_list():
+    return render_template("charge_list.html")
+
+
+@app.route('/search', methods =['POST'])
+def search():
+    city_receive = request.form['city_give']
+
+    return jsonify({'msg':f'{city_receive} 지역 검색 완료!'})
+
+
+@app.route('/init', methods=['POST'])
 def init():
     city = request.form["city"]
     chargeList_maker.init_data(city)
 
     return jsonify({'result': 'success', 'msg': "성공"})
-    
 
+<<<<<<< HEAD
 @app.route('/chargeList', methods = ['GET'])
+=======
+
+@app.route('/api/chargeList', methods=['GET'])
+>>>>>>> 4db5b92099e0c5ae1e31b40b851900f6761eadc2
 def get_charges():
     page = request.args.get('page', type=int, default=1)  # 페이지
     print("page", page)
@@ -46,11 +66,11 @@ def get_charges():
     # 게시물의 총 개수 세기
     tot_count = db.chargeList.find({}).count()
     # 마지막 페이지의 수 구하기
-    last_page_num = math.ceil(tot_count / size) # 반드시 올림을 해줘야함
+    last_page_num = math.ceil(tot_count / size)  # 반드시 올림을 해줘야함
 
     info = {
         'size': size,
-        'currentPage' : page,
+        'currentPage': page,
         'maxPage': last_page_num,
     }
     json_string = json.dumps(info)
@@ -80,21 +100,22 @@ def charge():
 @app.route('/review', methods = ['POST'])
 def review_save():
 
+@app.route('/api/review', methods=['POST'])
+def review_save():
     memberId = request.form["memberId"]
     chargeId = request.form["chargeId"]
-   
+
     rate = request.form["rate"]
     contents = request.form["contents"]
     like = request.form["like"]
-
 
     doc = {
         "memberId": memberId,
         "chargeId": chargeId,
 
-        "rate" : rate,
-        "contents":contents,
-        "like" : like
+        "rate": rate,
+        "contents": contents,
+        "like": like
     }
 
     db.review.insert_one(doc)
@@ -111,14 +132,13 @@ def review_update():
     contents = request.form["contents"]
     like = request.form["like"]
 
-
-    db.review.update({"_id": ObjectId(review_id) }, {"$set":{
-                                                            "rate" : rate,
-                                                            "contents": contents,
-                                                            "like" : like
-                                                        }
-                                                }
-                    )
+    db.review.update({"_id": ObjectId(review_id)}, {"$set": {
+        "rate": rate,
+        "contents": contents,
+        "like": like
+    }
+    }
+                     )
 
     return jsonify({'result': 'success', 'msg': '리뷰 수정 완료!'})
 
