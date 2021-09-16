@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+</html>
+
+<head>
+    <!-- Webpage Title -->
+    <title>Detail | EcoEnergy</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <meta property="og:title" content="EcoEnergy"/>
+    <meta property="og:description" content="EcoEnergy충전소에서 서울의 전기 자동차 위치를 찾으세요!"/>
+    <meta property="og:image" content="{{ url_for('static', filename='ogimg.png') }}"/>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <script src="https://kit.fontawesome.com/fc2bb77ae0.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <style>
+        * {
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        .is-sparta {
+            color: #3A7734 !important;
+        }
+
+
+        .navbar {
+            font-size: 20px;
+            font-weight: bold;
+
+        }
+
+        .card {
+            width: 50%;
+            margin: auto;
+            padding: 50px;
+        }
+
+        .review-making-box {
+            background-color: #BFDDE0;
+            width: 50%;
+            margin: auto;
+            padding: 50px;
+        }
+        .wrap {
+            background-color: RGBA(232, 52, 78, 0.2);
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        .review_contentT{
+            margin-left: 100px;
+        }
+
+        .review_content{
+            margin-left: 80px;
+        }
+
+        .deleteBtn{
+            margin-left: 10px;
+        }
+
+
+
+    </style>
+
+    <script>
+        // function posting(){
+        //     let review = $('#textarea-post').val()
+        //
+        //     $.ajax({
+        //         type: "POST",
+        //         url:"/posting",
+        //         data:{review_give:review},
+        //         success: function(response){
+        //             alert(response["msg"])
+        //             window.location.reload()
+        //         }
+        //     })
+        // }
+
+        function posting(){
+            let contents_give = $('#textarea-post').val()
+            let rate_give = '3'
+            let like_give = '2'
+
+            $.ajax({
+                type:"POST",
+                url:"/review",
+                data:{
+                    contents:contents_give,
+                    chargeId:`{{charge._id}}`,
+                    rate:rate_give,
+                    like:like_give
+                },
+                success: function(response){
+                    alert("등록 완료")
+                    window.location.reload()
+                }
+            })
+        }
+
+        function delete_one(){
+            console.log()
+            $.ajax({
+                type:'POST',
+                url:"/review/delete",
+                data:{
+                    _id:'id'
+                },
+                success: function (response) {
+                    alert('삭제완료')
+                    window.location.reload()
+                }
+
+            })
+
+        }
+        //
+        // function showReviews() {
+        //     $.ajax({
+        //         type:"GET",
+        //         url:"/review",
+        //         data: {},
+        //         success: function(response){
+        //             let reviews = response['all_reviews']
+        //
+        //             for(let i = 0; i < reviews.length; i++){
+        //                 let id = reviews[i]['memberId']
+        //                 let chargeId = reviews[i]['chargeId']
+        //                 let rate = reviews[i]['rate']
+        //                 let contents = reviews[i]['contents']
+        //                 let like = reviews[i]['like']
+        //
+        //                 let temp_html = `<div class="reviewBox">
+        //                 <span>${id}</span>
+        //                 <span class="review_content">${contents}</span>
+        //             </div>`
+        //
+        //                 $('#review_contents').append(temp_html)
+        //             }
+        //         }
+        //     })
+        // }
+    </script>
+
+</head>
+
+<body>
+<!--이거 누르면 메인 페이지로 가게 된다-->
+<nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/" style="margin-right: 15px;">
+            <i class="fa fa-car" aria-hidden="true"></i>
+            <strong class="is-sparta"
+                    style="font-family: 'Do Hyeon', sans-serif; font-size: larger;">EcoEnergy</strong>
+        </a>
+    </div>
+</nav>
+
+<!--change_list.html에서 하나를 선택했을 떄, 선택한 것의 정보에 따라 사진이 나오게 하는 것 -->
+<div id = "wrap">
+    <section class="section">
+        <div class="card">
+            <div class="card-image">
+                <figure class="image is-4by3">
+                    {% if charge.img == none %}
+                        <img class="bnImg" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5174%2F2019%2F01%2F22%2F295309_265529_0734_20190122112444134.jpg&type=a340">
+                    {% else %}
+                        <img class="bnImg" src="{{charge.img}}">
+                    {% endif %}
+                </figure>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col2" id="col2">
+                </div>
+                <br><br>
+            </div>
+            <span class="title" id="title">{{charge.chargeName}}</span>
+            <br><br>
+
+            <span class="address">주소: </span>
+            <span class="detail_address">{{charge.address}}</span>
+            <br>
+        </div>
+    </section>
+
+    <!--리뷰 쓰기 저장하기-->
+    <div class="box review-making-box">
+        <div class="field">
+            <label class="label review-box"><i class="fas fa-pencil-alt"> </i>리뷰 쓰기 </label>
+            <div class="control">
+                <textarea class="textarea" id="textarea-post" placeholder="리뷰를 남겨주세요!"></textarea>
+            </div>
+        </div>
+
+        <div class="field is-grouped">
+            <div class="control">
+                <button id="review-box" onclick="posting()" class="button is-info">저장</button>
+            </div>
+        </div>
+
+        <section class="section">
+            <div id="post-box" class="container">
+                <div class="reviewBox">
+                    <span>리뷰작성자</span>
+                    <span class="review_contentT">리뷰</span>
+                </div>
+                {% for review in reviewList %}
+                <div class="reviewBox">
+                    <span>리뷰작성자</span>
+                    <span class="review_contentT" id="1">{{review.contents}}</span>
+                    <button id="{{ 'review_id' + charge._id }}" class="button is-ghost deleteBtn" onclick="delete_one()">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+
+</html>
