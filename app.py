@@ -40,6 +40,9 @@ def sign_in():
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
 
+    print("username_receive", username_receive)
+    print("password_receive", password_receive)
+
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'username': username_receive, 'password': pw_hash})
 
@@ -138,13 +141,11 @@ def chargeList():
     }
     json_info = json.dumps(info)
 
-
     return render_template("chargeList.html", info = json_info, chargeList = chargeList)
 
 @app.route('/charge', methods = ['GET'])
 def charge():
     chargeId = request.args.get("id")
-
     try:
         charge = db.chargeList.find_one({'_id': ObjectId(chargeId)})
         row_reviewList = db.review.find({'chargeId': ObjectId(chargeId)})
@@ -152,8 +153,9 @@ def charge():
         return jsonify({'result' : 'fail', 'msg' : '리뷰 조회 실패'})
     
     # Objectid to String
+    print("charge_id:",charge['_id'])
     charge['_id'] = str(charge['_id'])
-
+    print("charge_id:",charge['_id'])
     # Objectid to pythondocument
     reviewList = []
     for review in row_reviewList:
@@ -161,15 +163,13 @@ def charge():
         review['chargeId'] = str(review['chargeId'])
         reviewList.append(review)
 
-    # return jsonify({"charge" : charge, "reviewList" : reviewList})
     return render_template("charge_detail.html", charge = charge, reviewList = reviewList)
 
-
-# @app.route('/review', methods=['GET'])
+# @app.route('/user', methods=['GET'])
 # def listing() :
-#     reviews = db.review.find({},{'_id':False})
+#     user_list = db.users.find({},{'_id':False})
 #
-#     return jsonify({'all_reviews': reviews})
+#     return jsonify({'all_users': user_list})
 
 @app.route('/review', methods=['POST'])
 def review_save():
@@ -197,41 +197,66 @@ def review_save():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return jsonify({'result' : 'fail', 'msg' : '리뷰 저장 실패'})
 
-    # return redirect(url_for("charge", id=chargeId))
-    return jsonify({'msg':'리뷰 저장 성공!'})
+    return redirect(url_for("charge", id=chargeId))
 
 @app.route('/review/update', methods = ['POST'])
 def review_update():
     review_id = request.form["_id"]
-    charge_id = request.form["chargeId"]
+    chargeId = request.form["chargeId"]
     rate = request.form["rate"]
     contents = request.form["contents"]
     like = request.form["like"]
 
+
+    print(contents)
+    # print(ObjectId(review_id))
+    # print(review_id)
+    # print(chargeId)
+    # db.review.update_one({"_id": ObjectId(review_id)}, {"$set": {"contents": contents}})
+    # try:
+    #
+    #     db.review.update_many({"_id": ObjectId(review_id)}, {"$set": {
+    #                                                             "chargeId": chargeId,
+    #                                                             "rate": rate,
+    #                                                             "contents": contents,
+    #                                                             "like": like
+    #                                                             }
+    #                                                         }
+    #                         )
+    #     # db.users.update_one({'name': 'bobby'}, {'$set': {'age': 19}})
+    #     # db.review.update_one({'chargeId':'review_id'}), {'$set':{'contents':contents}}
+    # except Exception as e:
+    #     print("An exception occurred ::", e)
+    #     return jsonify({'result' : 'fail', 'msg' : '리뷰 수정 실패'})
     try:
-        db.review.update({"_id": ObjectId(review_id)}, {"$set": {
+
+        db.review.update_one({"memberId": ObjectId(review_id)}, {"$set": {
+
                                                                 "rate": rate,
                                                                 "contents": contents,
                                                                 "like": like
+
                                                                 }
                                                             }
-                        )
+                            )
+
     except Exception as e:
         print("An exception occurred ::", e)
         return jsonify({'result' : 'fail', 'msg' : '리뷰 수정 실패'})
-        
-    return redirect(url_for("charge", id = "charge_id"))
+
+    # return jsonify({'result' : 'success', 'msg' : '리뷰 수정 성공'})
+    return redirect(url_for("charge", id = chargeId))
 
 @app.route('/review/delete', methods = ['POST'] )
 def review_delete():
-    review_id = request.form["_id"]
+    reviewId = request.form["_id"]
+    # content_receive = request.form['content_give']
     try:
-        db.review.delete_one({"_id": ObjectId(review_id)})
+        db.review.delete_one({"_id": ObjectId(reviewId)})
+        # db.review.delete_one({"contents": content_receive})
     except Exception as e:
         return jsonify({'result' : 'fail', 'msg' : '리뷰 삭제 실패'})
     return jsonify({'result': 'success', 'msg': '리뷰 삭제 완료!'})
-
-
 
 
 if __name__ == '__main__':
