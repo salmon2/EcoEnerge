@@ -164,7 +164,7 @@ def charge():
         review['chargeId'] = str(review['chargeId'])
         reviewList.append(review)
 
-    return render_template("dummy_charge.html", charge = charge, reviewList = reviewList)
+    return render_template("charge_detail.html", charge = charge, reviewList = reviewList)
 
 
 @app.route('/review', methods=['POST'])
