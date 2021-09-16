@@ -40,6 +40,9 @@ def sign_in():
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
 
+    print("username_receive", username_receive)
+    print("password_receive", password_receive)
+
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'username': username_receive, 'password': pw_hash})
 
@@ -125,13 +128,11 @@ def chargeList():
     }
     json_info = json.dumps(info)
 
-
     return render_template("chargeList.html", info = json_info, chargeList = chargeList)
 
 @app.route('/charge', methods = ['GET'])
 def charge():
     chargeId = request.args.get("id")
-
     try:
         charge = db.chargeList.find_one({'_id': ObjectId(chargeId)})
         row_reviewList = db.review.find({'chargeId': ObjectId(chargeId)})
@@ -139,8 +140,9 @@ def charge():
         return jsonify({'result' : 'fail', 'msg' : '리뷰 조회 실패'})
     
     # Objectid to String
+    print("charge_id:",charge['_id'])
     charge['_id'] = str(charge['_id'])
-
+    print("charge_id:",charge['_id'])
     # Objectid to pythondocument
     reviewList = []
     for review in row_reviewList:
@@ -148,14 +150,13 @@ def charge():
         review['chargeId'] = str(review['chargeId'])
         reviewList.append(review)
 
-
     return render_template("charge_detail.html", charge = charge, reviewList = reviewList)
 
 
 @app.route('/review', methods=['POST'])
 def review_save():
 
-    token_receive = request.cookies.get('mytoken')
+    #token_receive = request.cookies.get('mytoken')
     chargeId = request.form["chargeId"]
     rate = request.form["rate"]
     contents = request.form["contents"]
@@ -183,11 +184,13 @@ def review_save():
 
 @app.route('/review/update', methods = ['POST'])
 def review_update():
-    review_id = request.form["_id"]
+    review_id = request.form["id"]
     charge_id = request.form["chargeId"]
     rate = request.form["rate"]
     contents = request.form["contents"]
     like = request.form["like"]
+
+    print("review_id", review_id)
 
     try:
         db.review.update({"_id": ObjectId(review_id)}, {"$set": {
@@ -200,12 +203,13 @@ def review_update():
     except Exception as e:
         print("An exception occurred ::", e)
         return jsonify({'result' : 'fail', 'msg' : '리뷰 수정 실패'})
-        
+
+    #return jsonify({'result' : 'success', 'msg' : '리뷰 수정 성공'})   
     return redirect(url_for("charge", id = "charge_id"))
 
 @app.route('/review/delete', methods = ['POST'] )
 def review_delete():
-    review_id = request.form["_id"]
+    review_id = request.form["id"]
     try:
         db.review.delete_one({"_id": ObjectId(review_id)})
     except Exception as e:
@@ -213,7 +217,7 @@ def review_delete():
     return jsonify({'result': 'success', 'msg': '리뷰 삭제 완료!'})
 
 
-
-
 if __name__ == '__main__':
     app.run('localhost', port=5000, debug=True)
+
+

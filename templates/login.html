@@ -59,7 +59,7 @@
 
     <script>
         function sign_in() {
-    let username = $("#input-username").val()
+            let username = $("#input-username").val()
             let password = $("#input-password").val()
 
             if (username == "") {
@@ -201,6 +201,11 @@
                 }
             });
         }
+        function changeDanger(){
+            if($("#help-id").hasClass("is-safe")){
+                $("#help-id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+            }
+        }
 
     </script>
 
@@ -235,7 +240,7 @@
                     <div class="content">
                         <div class="field has-addons">
                             <div class="control has-icons-left" style="width:100%">
-                                <input class="input" id="input-username" placeholder="아이디" type="text">
+                                <input class="input" onchange= "changeDanger()"id="input-username" placeholder="아이디" type="text">
                                 <span class="icon is-small is-left"><i class="fa fa-user"></i></span>
                             </div>
                             <div class="control is-hidden" id="btn-check-dup">
