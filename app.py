@@ -202,7 +202,7 @@ def review_save():
 @app.route('/review/update', methods = ['POST'])
 def review_update():
     review_id = request.form["id"]
-    charge_id = request.form["chargeId"]
+    chargeId = request.form["chargeId"]
     rate = request.form["rate"]
     contents = request.form["contents"]
     like = request.form["like"]
@@ -222,13 +222,13 @@ def review_update():
         return jsonify({'result' : 'fail', 'msg' : '리뷰 수정 실패'})
 
     #return jsonify({'result' : 'success', 'msg' : '리뷰 수정 성공'})   
-    return redirect(url_for("charge", id = "charge_id"))
+    return redirect(url_for("charge", id = chargeId))
 
 @app.route('/review/delete', methods = ['POST'] )
 def review_delete():
-    review_id = request.form["id"]
+    reviewId = request.form["id"]
     try:
-        db.review.delete_one({"_id": ObjectId(review_id)})
+        db.review.delete_one({"_id": ObjectId(reviewId)})
     except Exception as e:
         return jsonify({'result' : 'fail', 'msg' : '리뷰 삭제 실패'})
     return jsonify({'result': 'success', 'msg': '리뷰 삭제 완료!'})
