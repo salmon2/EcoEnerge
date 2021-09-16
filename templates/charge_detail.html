@@ -74,7 +74,11 @@
             height: 20px;
             width: 20px;
         }
+        .updateBtn{
 
+            height: 20px;
+            width: 20px;
+        }
 
 
     </style>
@@ -136,7 +140,6 @@
                     like: like_give
                 },
                 success: function (response) {
-                    alert('업데이트 완료')
                     window.location.reload()
                 }
 
@@ -220,7 +223,7 @@
                     <button id="{{review._id}}" class="button is-ghost deleteBtn" onclick="delete_one(this.id)">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
-                    <button id="{{review.memberId}}" class="button is-ghost deleteBtn" onclick="update_one(this.id)">
+                    <button id="{{review.memberId}}" class="button is-ghost updateBtn" onclick="update_one(this.id)">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </button>
                 </div>
