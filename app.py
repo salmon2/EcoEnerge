@@ -180,7 +180,7 @@ def review_save():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return jsonify({'result' : 'fail', 'msg' : '리뷰 저장 실패'})
 
-    return redirect(url_for("login"))
+    return redirect(url_for("charge", id=chargeId))
 
 @app.route('/review/update', methods = ['POST'])
 def review_update():

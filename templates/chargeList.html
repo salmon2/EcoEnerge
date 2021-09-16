@@ -1,518 +1,277 @@
 <!doctype html>
 <html lang="en">
-    <head>
+<head>
+    <!-- Webpage Title -->
+    <title>Detail | EcoEnergy</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <meta property="og:title" content="EcoEnergy"/>
+    <meta property="og:description" content="EcoEnergy충전소에서 서울의 전기 자동차 위치를 찾으세요!"/>
+    <meta property="og:image" content="{{ url_for('static', filename='ogimg.png') }}"/>
+    ​
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    ​
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
-        <!-- Webpage Title -->
-        <title>Eco Energy 찌릿</title>
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    ​
+    <script src="https://kit.fontawesome.com/fc2bb77ae0.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <style>
+            .hero{
+                position: absolute;
+                width: 100%;
+                height: 70px;
 
-        <!-- Required meta tags -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- Bulma CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-        <!-- Font Awesome CSS -->
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-        <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
-        <script src="https://kit.fontawesome.com/fd791e4a0c.js" crossorigin="anonymous"></script>
-
-        <style>
-            * {
-                font-family: 'Gowun Dodum', sans-serif;
             }
-            .wrapper {
-                width: 900px;
-                margin-top: 20px;
+
+            .bnImg{
+                height: 70px;
+                position: absolute;
+                left: 0px;
+                top: 0px;
             }
 
-            .pg-main1 {
+            .bnTitle{
+                position: absolute;
+                font-family: 'Gugi', cursive;
+                width: 500px;
+                font-size: 20px;
+                left: 110px;
+                top: 40px;
+            }
+
+            .btns{
+                display: block;
+                text-align: right;
+            }
+
+            .mainImgDiv{
+                border-width: 3px;
+                margin-bottom: 50px;
+                margin-top : 50px;
+            
+                border-color: white white black white;
+                box-shadow: 3px 3px 3px 3px gray;
+            }
+
+            .mainImg{
+                display: block;
+                position: relative;
+                width: 600px;
+                height: 300px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 70px;
+                opacity: 0.5;
+            }
+
+            .mainTxt{
+                display: block;
+                font-family: 'Gaegu', cursive;
+                text-align: center;
+                font-size: 100px;
+                margin-bottom: 50px;
+            }
+
+            .lowerTitle{
+                margin-top: 50px;
+                font-family: 'Gaegu', cursive;
+                text-align: center;
+                font-size: 40px;
+            }
+
+            .selectLo{
+                margin-top: 50px;
+                display: block;
+                width: 100%;
                 text-align: center;
             }
 
-            .search-sec {
-                float: right;
-                width: 500px;
-                margin: 20px auto 0 auto;
+            .select1{
+                color: gray;
+                height: 30px;
+                width: 200px;
+                text-align: center;
             }
 
-            .choose-filter > img-icon {
-                width: 250px;
-                height: 250px;
-
-            }
-            .choose-filter > .content {
-                size: 15px;
-            }
-
-            .gasStore-name {
-                display: inline-block;
+            .select2{
+                color: gray;
+                height: 30px;
+                width: 150px;
+                text-align: center;
+                margin-left: 10px;
             }
 
-            .gasStore-name:hover {
-                text-decoration: underline;
+            .sBtn{
+                margin-left: 10px;
+                height: 30px;
             }
 
-            .card {
-                margin-bottom: 15px;
+            .wrap{
+                position: relative;
+                padding-top: 50px;
+                padding-bottom: 95px;
+
             }
-            .bar1, .bar2, .bar3 {
-                width: 35px;
-                height: 5px;
-                background-color: #333;
-                margin: 6px 0;
-                transition: 0.4s;
-            }
-            .button {
-                width: 100px;
-                height: 35px;
-                text-align: right;
-            }
-            .container-right {
-                float: right;
+            .wrap::after{
+                background:url(https://previews.123rf.com/images/antpkr/antpkr1309/antpkr130900057/22224518-%EC%9E%94%EB%94%94-%EB%B0%B0%EA%B2%BD.jpg) no-repeat; opacity:0.5!important; top:0; left:0; position:absolute; background-size:100%; z-index:-1; content:''; width:100%; height:100%;
             }
 
-            .dropdown-container {
-                display: none;
-                background-color: #262626;
-                padding-right: 8px;
+            .card{
+                width: 600px;
             }
-            /*.content > .title {*/
-
-            /*}*/
-            /*.table1 > .content {*/
-            /*    font-size: 5px;*/
-            /*}*/
-
-
-            /*pagination links*/
-            .pagination a{
-                color: black;
-                float: left;
-                padding: 8px 16px;
-                text-decoration: none;
-                transition: background-color .3s;
+            .wrap_pagenation{
+                width:100px;
+                margin:auto;
+                margin-top: 50px;
+                margin-bottom: 50px;
             }
 
-            /*Style the active/current_link*/
-            .pagination a.active {
-                background-color: dodgerblue;
-                color: white;
-            }
-            /*Add a grey background color on mouse-over*/
-            .pagination a:hover:not(.active) {background-color: #ddd}
-        </style>
-
-        <script>
-            $(document).ready(function () {
-                showEcoGas()
-            })
-
-            function showEcoGas() {
-                $.ajax({
-                    type: "GET",
-                    url: "/gasStation",
-                    data: {},
-                    success: function(response){
-                        let gasStoreStorage = response['all_gasStaton']
-                        for (let i = 0; i < gasStoreStorage.length; i++){
-                            let title = gasStoreStorage[i]['title']
-                            let image = gasStoreStorage[i]['image']
-                            let temp_html = `<div class="card-deck">
-                                              <div class="card">
-                                                <div class="card-body">
-                                                  <h5 class="card-title">chargeName/h5>
-                                                  <p class="card-text">address</p>
-                                                </div>
-                                              </div>`
-                        }
-                    }
-                })
-            }
-        </script>
-
-    </head>
-    <body>
-        <section class="hero is-warning">
-            <div class="hero-body">
-                <div class="container center">
-                    <h1 class="title">
-                        마이 페이보릿 무비스타😆
-                    </h1>
-                    <h2 class="subtitle">
-                        순위를 매겨봅시다
-                    </h2>
-                </div>
-            </div>
+    </style>
+</head>
+<body>​
+    <div>
+        <section class="hero is-small is-success">
+          <div class="hero-body">
+              <img class="bnImg" src="http://t1.daumcdn.net/liveboard/prismtv/55253c0eb8e74ff6b00459fa5e08a80d.jpg">
+            <p class="bnTitle">
+                전기차 충전소| EcoEnergy
+                <i class="fa fa-leaf" aria-hidden="true"></i>
+            </p>
+          </div>
         </section>
-
-    <!---->
-    <div class="container-right" onclick="myfunction()">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
     </div>
-    <script>
-        function myfunction(x){
-            x.classList.toggle();
-        }
-    </script>
 
-    <div class="dropdown-container">
-        <nav id="directory">
-        <ul>
-            <li>
-                "Eco충전소 찾기"
-                <div class="search-container">
-                    <div class="searchbar" id="searchInfo">
-                        <input class="search_input" type="text" id="keyword" placeholder="looking for...">
-                        <a href="#" class="search_icon" onclick="search_list()">
-                            <i class="fas fa-search" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
-            </li>
-            <li>Quick Search</li>
-            <li>
-                지역구
-                <select class="form-control search-slt" id="select1">
-                    <option val>--서울 지역 전체(Entire town in Seoul)--</option>
-                    <option val>종로/중구/용산</option>
-                    <option val>도봉/강북/성북/노원</option>
-                    <option val>동대문/중랑/성동/광진</option>
-                    <option val>강동/송파/서초/강남</option>
-                    <option val>동작/관악/금천</option>
-                    <option val>강서/양천/영등포/구로</option>
-                    <option val>은평/마포/서대문</option>
-                    <option val>서울 이외 타지역</option>
-                </select>
-            </li>
-            <li>
-                <button class="button" onclick=" showresult()">충전소 찾기</button>
-            </li>
-        </ul>
-        <hr>
-    </nav>
-</header>
-</div>
-
-
-        <main class = "pg-main1" id="searchLocation">
-            <section id="visual">
-                <img src="../static/ecoElectricGas.jpg" alt>
-                <div class="title"><h1>서울시 현 위치에서 가까운 전기차 충전소 가려면?</h1></div>
-                <div class="sub-title">어디? 여기로 찾아봐</div>
-                <h2>EcoEnergy 충전소</h2>
-                <h2>서울시</h2>
-            </section>
-        </main>
-
-        <section class="search-sec">
-            <div id="search-bar" class="container">
-                <form action="#" method="post" novalidate="novalidate">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                <select class="form-control search-slt" id="select2">
-                                    <option val>--서울 지역 전체(Entire town in Seoul)--</option>
-                                    <option val>종로/중구/용산</option>
-                                    <option val>도봉/강북/성북/노원</option>
-                                    <option val>동대문/중랑/성동/광진</option>
-                                    <option val>강동/송파/서초/강남</option>
-                                    <option val>동작/관악/금천</option>
-                                    <option val>강서/양천/영등포/구로</option>
-                                    <option val>은평/마포/서대문</option>
-                                    <option val>서울 이외 타지역</option>
-                                </select>
-                                <h2>구</h2>
-                                <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                    <button type="button" class="btn btn-danger wrn-btn" onclick="search()">Search
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            </section>
-
-            <h2>"총 "
-            <span class="emg-num">#searchnumber</span>
-            "곳을 찾았습니다."
-            </h2>
-<!--            <div>-->
-<!--                <table>-->
-<!--                    <th>-->
-<!--                        <div>-->
-<!--                            <img>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <p></p>-->
-<!--                        </div>-->
-<!--                    </th>-->
-<!--                </table>-->
-<!--            </div>-->
-            <div class="table1">
-                <table>
-                    <th>
-                        <div class="img-icon">
-                            <img src="../static/용산역아이파크몰.jpg" alt="" style="width: 200px;height:200px;">
-                        </div>
-                        <div class="content">
-                            <p class="title" style="font-size: 2em">용산역 아이파크몰 전기차충전소</p>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="img-icon">
-                            <img src="../static/ev스테이션강동.jpg" alt="" style="width: 200px;height:200px;">
-                        </div>
-                        <div class="content">
-                            <p class="title">EV스테이션강동 전기차충전소</p>
-                        </div>
-                    </th>
-                    <th>
-                        <div>
-                            <img src="../static/서울시청.jpg" alt="" style="width: 200px;height:200px;">
-                        </div>
-                        <div>
-                            <p class="title">서울시청 전기차충전소</p>
-                        </div>
-                    </th>
-                </table>
-            </div>
-<!--두번째열-->
-            <div class="table2">
-                <table>
-                    <th>
-                        <div>
-                            <img src="../static/롯데마트 중계점.jpg" alt="" style="width: 200px;height:200px;">
-                        </div>
-                        <div>
-                            <p class="title">롯데마트 중계점 전기차충전소</p>
-                        </div>
-                    </th>
-                    <th>
-                        <div>
-                            <img src="../static/GS칼텍스.jpg" alt="" style="width: 200px;height:200px;">
-                        </div>
-                        <div>
-                            <p class="title">GS칼텍스 전기차충전소 가든파이브주유소</p>
-                        </div>
-                    </th>
-                    <th>
-                        <div>
-                            <img src="../static/코엑스충전소.jpg" alt="" style="width: 200px;height:200px;">
-                        </div>
-                        <div>
-                            <p class="title">코엑스 전기차충전소</p>
-                        </div>
-                    </th>
-                </table>
-            </div>
-            <div>
-                <table>
-                    <th>
-                        <div>
-                            <img src="../static/전기차충전소.jpg" alt="" style="width: 200px;height:200px;">
-                        </div>
-                        <div>
-                            <p class="title">건국대학교 서울 전기차충전소</p>
-                        </div>
-                    </th>
-                    <th>
-                        <div>
-                            <img src="../static/전기차충전소.jpg" alt="" style="width: 200px;height:200px;">
-                        </div>
-                        <div>
-                            <p class="title">신세계 강남점 전기차충전소</p>
-                        </div>
-                    </th>
-                    <th>
-                        <div>
-                            <img src="../static/전기차충전소.jpg" alt="" style="width: 200px;height:200px;">
-                        </div>
-                        <div>
-                            <p class="title">아시아공원 공영주차장 전기차충전소</p>
-                        </div>
-                    </th>
-                </table>
-            </div>
-
-
-
-
-
-
-
-
-
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">신림동 제1공영주차장 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">서울시 이마트(목동점) 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">서울아산병원 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">더현대 서울 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">서울시 이마트(가양점) 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">강남구청 공영주차장 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">GS칼텍스 전기차충전소(서부)</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">신도림테크노마트 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">서울시 동작구 보건소 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">마포 메세나폴리스아파트 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">롯데마트 김포공항점 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">서울시 이마트(월계점) 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">잠실역 공영주차장 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">서울시 합정동 주민센터 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">목동주차장 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">연세대학교 전기차충전소</p>
-                        <img src="none" alt="" style="width: 200px;height:200px;">
-                        <p class="title">롯데마트 잠실점 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">서울시 강남구 한국무역협회 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">예술의 전당 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">강서보건소 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">홈플러스 상봉점 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">노원구청 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">GS칼텍스 전기차충전소(경인고속)</p>
-                        <img src="none" alt>
-                        <p class="title">논현로22길 공영주차장전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">서울시 용산보건소 보건분소 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">서울시 관악구 보건소 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">서울시 서초구 방배본동주민센터 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">강변테크노마트 주차장 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">현대백화점 현대시티아울렛 동대문 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">서울시 노원본점 전기차충전소</p>
-                        <img src="none" alt>
-                        <p class="title">한국관광공사 옆 노상 공영주차장 전기차충전소</p>
-                        <p class="title">문정역테라타워 전기차충전소</p>
-                        <p class="title">서울시 동대문소방서 전기차충전소</p>
-                        <p class="title">서울시 이마트(마포공덕점) 전기차충전소</p>
-                        <p class="title">서울시 송파구 롯데타워 지하4층 전기차충전소</p>
-                        <p class="title">영등포 제3공영 전기차충전소</p>
-                        <p class="title">서울올림픽공원 남2문주차장 전기차충전소</p>
-                        <p class="title">청량리롯데백화점 전기차충전소</p>
-                        <p class="title">서울시 이마트(은평점) 전기차충전소</p>
-                        <p class="title">가락시장 전기차충전소</p>
-                        <p class="title">서울숲 포휴 전기차충전소</p>
-                        <p class="title">롯데마트 은평점 전기차충전소</p>
-                        <p class="title">종로구보건소 전기차충전소</p>
-                        <p class="title">홈플러스 면목점 전기차충전소</p>
-                        <p class="title">어린이대공원 후문주차장 전기차충전소</p>
-                        <p class="title">현대아울렛 가산 전기차충전소</p>
-                        <p class="title">LH서울지역본부 전기차충전소</p>
-                        <p class="title">서울시 이마트(구로점) 전기차충전소</p>
-                        <p class="title">서울시 낙성대동 주민센터 전기차충전소</p>
-                        <p class="title">홈플러스 영등포점 전기차충전소</p>
-                        <p class="title">홈플러스 강동점 전기차충전소</p>
-                        <p class="title">NC백화점(강서점) 전기차충전소</p>
-                        <p class="title">서울시 강서구청 전기차충전소</p>
-                        <p class="title">동대문구청 전기차충전소</p>
-                        <p class="title">GS칼텍스 전기차충전소(초동)</p>
-                        <p class="title">서초구청 전기차충전소</p>
-                        <p class="title">역삼1동 주민센터 전기차충전소</p>
-                        <p class="title">서울시 이마트(성수점) 전기차충전소</p>
-                        <p class="title">은평평화공원 공영주차장 전기차충전소</p>
-                        <p class="title">GS칼텍스 전기차충전소(경일석유직영)</p>
-                        <p class="title">서울시 이마트(명일점) 전기차충전소</p>
-                        <p class="title">강동구청 전기차충전소</p>
-                        <p class="title">가로공원 공영주차장 전기차충전소</p>
-                        <p class="title">고려대학교 전기차충전소</p>
-                        <p class="title">홈플러스 금천점 전기차충전소</p>
-                        <p class="title">서울시 신림점 전기차충전소</p>
-                        <p class="title">드림랜드주유소 전기차충전소</p>
-                        <p class="title">서울시 서초구 서초1동주민센터 전기차충전소</p>
-                        <p class="title">중랑구보건소 전기차충전소</p>
-                        <p class="title">롯데백화점 본점 전기차충전소</p>
-                        <p class="title">압구정 428 공영주차장1 전기차충전소</p>
-                        <p class="title">GS칼텍스 전기차충전소(세창)</p>
-                        <p class="title">GS칼텍스 전기차충전소(암사)</p>
-                        <p class="title">시민의숲동측 공영주차장 전기차충전소</p>
-                        <p class="title">그랜드워커힐 (서울) 전기차충전소</p>
-                        <p class="title">한남동 공영주차장 전기차충전소</p>
-                        <p class="title">곰달래문화복지센터 공영주차장 전기차충전소</p>
-                        <p class="title">SK에너지 전기차충전소(서린빌딩)</p>
-                        <p class="title">사당역 공영주차장 전기차충전소</p>
-                        <p class="title">신방화역 환승주차장 전기차충전소</p>
-                        <p class="title">서울시 중구서울스퀘어 전기차충전소</p>
-                        <p class="title">서울시 한국공항공사 전기차충전소</p>
-                        <p class="title">동대문구 체육관 전기차충전소</p>
-                        <p class="title">세곡동주민센터 전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                        <p class="title">전기차충전소</p>
-                    </div>
-                </div>
-
-
-                </div>
-            </div>
-
-        <!---->
-<!--        def main():-->
-<!--        ecogasst = list(db.ecogasst.find({}, {"_id:False"}))-->
-<!--        return render_template("index.html", ecogasst=ecogasst)-->
-        <body id="address-box">
-            {% for loc in ecogasst %}
-            <tr id="loc-{{ loc.loc }}">
-                <td><a href="/detail/{{ loc.loc }}?status_give=old">{{ loc.loc }}</a></td>
-                <td>{{ loc.definition|safe }}
-                </td>
-            </tr>
-            {% endfor %}
-        </body>
-
-
-
-
-                <!--#page number setup-->
-                <div class="pagination">
-                    <a href="#">&laquo;</a>
-                    <a href="#">1</a>
-                    <a class="active" href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">6</a>
-                    <a href="#">7</a>
-                    <a href="#">&raquo;</a>
-                </div>
-            </div>
+    <div class="mainImgDiv" >
+        <img class="mainImg" src=http://t1.daumcdn.net/liveboard/prismtv/55253c0eb8e74ff6b00459fa5e08a80d.jpg>
+        <div>
+            <span class="mainTxt">EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i> 충전소</span>
         </div>
-    </body>
+    </div>
+
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for charge in chargeList %}
+            <div class="col">
+                <div class="card">
+                <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h4 class="card-title">{{charge.chargeName}}</h4>
+                </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+
+
+
+
+        
+
+        <div class="col">
+            <div class="card">
+              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card">
+              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card">
+              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card">
+              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card">
+              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card">
+              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card">
+              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card">
+              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+              </div>
+            </div>
+          </div>
+
+
+    </div>
+    
+    <div class ="wrap_pagenation">
+        <nav aria-label="...">
+            <ul class="pagination">
+              <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item active" aria-current="page">
+                <a class="page-link" href="#">2</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+    </div>
+
+
+
+
+</body>
 </html>

@@ -168,6 +168,7 @@
             return regExp.test(asValue);
         }
 
+        
         function check_dup() {
             let username = $("#input-username").val()
             console.log(username)
@@ -197,19 +198,12 @@
                         $("#help-id").text("사용할 수 있는 아이디입니다.").removeClass("is-danger").addClass("is-success")
                     }
                     $("#help-id").removeClass("is-loading")
-
                 }
             });
         }
+
         function changeDanger(){
-            console.log("changeDanger")
-
-            var Ele = document.getElementById("help-id")
-            console.log(Ele)
-
-
             if($("#help-id").hasClass("is-success")){
-                console.log("성공상태 실패로 바꾸기")
                 $("#help-id").text("중복확인을 해주세요").removeClass("is-safe").addClass("is-danger")
             }
         }
