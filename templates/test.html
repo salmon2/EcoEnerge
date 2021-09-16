@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<script>
+  function reply_click(clicked_id)
+  {
+    alert(clicked_id)
+  }
+</script>
+<body>
+<button id="1" onClick="reply_click(this.id)">B1</button>
+<button id="2" onClick="reply_click(this.id)">B1</button>
+<button id="3" onClick="reply_click(this.id)">B1</button>
+
+
+<div ng-attr-id="{{ 'object-' + myScopeObject.index }}"></div>
+</body>
+</html>

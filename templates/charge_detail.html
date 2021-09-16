@@ -69,11 +69,32 @@
             margin-left: 80px;
         }
 
+        .deleteBtn{
+            margin-left: 10px;
+        }
+
 
 
     </style>
 
     <script>
+<<<<<<< HEAD
+=======
+        // function posting(){
+        //     let review = $('#textarea-post').val()
+        //
+        //     $.ajax({
+        //         type: "POST",
+        //         url:"/posting",
+        //         data:{review_give:review},
+        //         success: function(response){
+        //             alert(response["msg"])
+        //             window.location.reload()
+        //         }
+        //     })
+        // }
+
+>>>>>>> origin/getupngo1
         function posting(){
             let contents_give = $('#textarea-post').val()
             let rate_give = '3'
@@ -94,6 +115,52 @@
                 }
             })
         }
+<<<<<<< HEAD
+=======
+
+        function delete_one(){
+            console.log()
+            $.ajax({
+                type:'POST',
+                url:"/review/delete",
+                data:{
+                    _id:'id'
+                },
+                success: function (response) {
+                    alert('삭제완료')
+                    window.location.reload()
+                }
+
+            })
+
+        }
+        //
+        // function showReviews() {
+        //     $.ajax({
+        //         type:"GET",
+        //         url:"/review",
+        //         data: {},
+        //         success: function(response){
+        //             let reviews = response['all_reviews']
+        //
+        //             for(let i = 0; i < reviews.length; i++){
+        //                 let id = reviews[i]['memberId']
+        //                 let chargeId = reviews[i]['chargeId']
+        //                 let rate = reviews[i]['rate']
+        //                 let contents = reviews[i]['contents']
+        //                 let like = reviews[i]['like']
+        //
+        //                 let temp_html = `<div class="reviewBox">
+        //                 <span>${id}</span>
+        //                 <span class="review_content">${contents}</span>
+        //             </div>`
+        //
+        //                 $('#review_contents').append(temp_html)
+        //             }
+        //         }
+        //     })
+        // }
+>>>>>>> origin/getupngo1
     </script>
 
 </head>
@@ -160,6 +227,7 @@
                     <span>리뷰작성자</span>
                     <span class="review_contentT">리뷰</span>
                 </div>
+<<<<<<< HEAD
                 <div id="review_contents">
                     <div class="reviewBox">
                         <span>getupngo</span>
@@ -169,8 +237,17 @@
                             {% endfor %}
                         </span>
                     </div>
+=======
+                {% for review in reviewList %}
+                <div class="reviewBox">
+                    <span>리뷰작성자</span>
+                    <span class="review_contentT" id="1">{{review.contents}}</span>
+                    <button id="{{ 'review_id' + charge._id }}" class="button is-ghost deleteBtn" onclick="delete_one()">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+>>>>>>> origin/getupngo1
                 </div>
-
+                {% endfor %}
             </div>
         </section>
     </div>
