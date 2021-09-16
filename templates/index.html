@@ -130,16 +130,23 @@
         </style>
 
         <script>
-        // 로그인 및 회원가입 페이지로 이동
-        function to_login() {
-            window.location.href="/login"
-        }
+        // // 로그인 및 회원가입 페이지로 이동
+        // function to_login() {
+        //     window.location.href="/login"
+        // }
 
         // 검색 API 연결 및 페이지 이동
         function search() {
             let city = $('#city_name').val()
             window.location.href= `/chargeList?page=1&key=${city}`
         }
+
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃 완료!')
+            window.location.href="/login"
+        }
+
         </script>
 
     </head>
@@ -152,7 +159,7 @@
                 전기차 충전소| EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i>
                 </p>
                   <div class="btns">
-                      <button class="button is-primary is-light btn_sign_in" onclick="to_login()"><strong>로그아웃<i class="fa fa-sign-in" aria-hidden="true"></i></strong></button>
+                      <button class="button is-primary is-light btn_sign_in" onclick="sign_out()"><strong>로그아웃<i class="fa fa-sign-in" aria-hidden="true"></i></strong></button>
                   </div>
               </div>
             </section>
@@ -164,7 +171,7 @@
                 <span class="mainTxt">EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i> 충전소</span>
                 </div>
             </div>
-       <div class = "wrap">
+        <div class = "wrap">
             <div>
                 <div class = "lowerTitle">
                     <div>
