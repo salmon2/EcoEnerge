@@ -153,9 +153,10 @@ def charge():
         return jsonify({'result' : 'fail', 'msg' : '리뷰 조회 실패'})
     
     # Objectid to String
-    print("charge_id:",charge['_id'])
+    #print("charge_id:", charge['_id'])
     charge['_id'] = str(charge['_id'])
-    print("charge_id:",charge['_id'])
+    #print("charge_id:", charge['_id'])
+    
     # Objectid to pythondocument
     reviewList = []
     for review in row_reviewList:
@@ -163,13 +164,8 @@ def charge():
         review['chargeId'] = str(review['chargeId'])
         reviewList.append(review)
 
-    return render_template("charge_detail.html", charge = charge, reviewList = reviewList)
+    return render_template("dummy_charge.html", charge = charge, reviewList = reviewList)
 
-# @app.route('/review', methods=['GET'])
-# def listing() :
-#     reviews = db.review.find({},{'_id':False})
-#
-#     return jsonify({'all_reviews': reviews})
 
 @app.route('/review', methods=['POST'])
 def review_save():

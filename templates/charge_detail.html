@@ -74,25 +74,6 @@
     </style>
 
     <script>
-       // $(document).ready(function(){
-       //    showReviews();
-       //  });
-
-
-        // function posting(){
-        //     let review = $('#textarea-post').val()
-        //
-        //     $.ajax({
-        //         type: "POST",
-        //         url:"/posting",
-        //         data:{review_give:review},
-        //         success: function(response){
-        //             alert(response["msg"])
-        //             window.location.reload()
-        //         }
-        //     })
-        // }
-
         function posting(){
             let contents_give = $('#textarea-post').val()
             let rate_give = '3'
@@ -113,32 +94,6 @@
                 }
             })
         }
-        //
-        // function showReviews() {
-        //     $.ajax({
-        //         type:"GET",
-        //         url:"/review",
-        //         data: {},
-        //         success: function(response){
-        //             let reviews = response['all_reviews']
-        //
-        //             for(let i = 0; i < reviews.length; i++){
-        //                 let id = reviews[i]['memberId']
-        //                 let chargeId = reviews[i]['chargeId']
-        //                 let rate = reviews[i]['rate']
-        //                 let contents = reviews[i]['contents']
-        //                 let like = reviews[i]['like']
-        //
-        //                 let temp_html = `<div class="reviewBox">
-        //                 <span>${id}</span>
-        //                 <span class="review_content">${contents}</span>
-        //             </div>`
-        //
-        //                 $('#review_contents').append(temp_html)
-        //             }
-        //         }
-        //     })
-        // }
     </script>
 
 </head>
@@ -210,7 +165,7 @@
                         <span>getupngo</span>
                         <span class="review_content">
                             {% for review in reviewList %}
-                                <p>{{review.contents}}</p>
+                                <p id = "{{review._id}}">{{review.contents}}</p>
                             {% endfor %}
                         </span>
                     </div>

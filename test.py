@@ -1,14 +1,29 @@
-from bson.objectid import ObjectId
 from pymongo import MongoClient
-import requests
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 
-client = MongoClient('localhost', 27017 )
-db = client.EcoEnerge
-chargeId = '61406fca4e19dc3866a4c73f'
+app = Flask(__name__)
 
-charge = db.review.find_one({'_id': ObjectId("61406fca4e19dc3866a4c73f")})
-reviews = db.review.find({'chargeId': ObjectId(chargeId)})
+client = MongoClient('localhost', 27017)
+db = client.Test
 
 
-print(charge)
-print(reviews)
+@app.route('/', methods=['POST'])
+def home():
+    # data 입력받기
+    chargeName = request.form['chargeName']
+    address = request.form['address']
+
+    # data, doc form으로 변경
+    doc = {
+        "username": chargeName,
+        "password": address
+    }
+
+    #insert
+    db.chargeList.insert_one(doc)
+    
+    return jsonify({'result': 'success'})
+
+
+if __name__ == '__main__':
+    app.run('localhost', port=5000, debug=True)

@@ -13,7 +13,7 @@ def init_data(region):
     client = MongoClient('localhost', 27017)
     db = client.EcoEnerge
 
-
+    #pymongo 연결
     driver = webdriver.Chrome("./chromedriver")
     driver.get("https://m.map.naver.com/#/search")
 
