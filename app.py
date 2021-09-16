@@ -201,7 +201,7 @@ def review_save():
 
 @app.route('/review/update', methods = ['POST'])
 def review_update():
-    review_id = request.form["id"]
+    review_id = request.form["_id"]
     chargeId = request.form["chargeId"]
     rate = request.form["rate"]
     contents = request.form["contents"]
@@ -226,7 +226,7 @@ def review_update():
 
 @app.route('/review/delete', methods = ['POST'] )
 def review_delete():
-    reviewId = request.form["id"]
+    reviewId = request.form["_id"]
     try:
         db.review.delete_one({"_id": ObjectId(reviewId)})
     except Exception as e:
