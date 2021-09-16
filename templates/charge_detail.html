@@ -60,8 +60,81 @@
             min-height: 100vh;
             padding-bottom: 50px;
         }
+
+        .review_contentT{
+            margin-left: 100px;
+        }
+
+        .review_content{
+            margin-left: 80px;
+        }
+
+
+
     </style>
+
     <script>
+       // $(document).ready(function(){
+       //    showReviews();
+       //  });
+
+
+        // function posting(){
+        //     let review = $('#textarea-post').val()
+        //
+        //     $.ajax({
+        //         type: "POST",
+        //         url:"/posting",
+        //         data:{review_give:review},
+        //         success: function(response){
+        //             alert(response["msg"])
+        //             window.location.reload()
+        //         }
+        //     })
+        // }
+
+        function posting(){
+            let contents_give = $('#textarea-post').val()
+            let chargeId_give = '61418daaea7935f5d7df32fb'
+            let rate_give = '3'
+            let like_give = '2'
+
+            $.ajax({
+                type:"POST",
+                url:"/review",
+                data:{contents:contents_give,chargeId:chargeId_give,rate:rate_give,like:like_give},
+                success: function(response){
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            })
+        }
+        //
+        // function showReviews() {
+        //     $.ajax({
+        //         type:"GET",
+        //         url:"/review",
+        //         data: {},
+        //         success: function(response){
+        //             let reviews = response['all_reviews']
+        //
+        //             for(let i = 0; i < reviews.length; i++){
+        //                 let id = reviews[i]['memberId']
+        //                 let chargeId = reviews[i]['chargeId']
+        //                 let rate = reviews[i]['rate']
+        //                 let contents = reviews[i]['contents']
+        //                 let like = reviews[i]['like']
+        //
+        //                 let temp_html = `<div class="reviewBox">
+        //                 <span>${id}</span>
+        //                 <span class="review_content">${contents}</span>
+        //             </div>`
+        //
+        //                 $('#review_contents').append(temp_html)
+        //             }
+        //         }
+        //     })
+        // }
     </script>
 
 </head>
@@ -89,6 +162,10 @@
                     {% else %}
                         <img class="bnImg" src="{{charge.img}}">
                     {% endif %}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/getupngo1
                 </figure>
             </div>
             <br>
@@ -124,6 +201,23 @@
 
         <section class="section">
             <div id="post-box" class="container">
+<<<<<<< HEAD
+=======
+                <div class="reviewBox">
+                    <span>리뷰작성자</span>
+                    <span class="review_contentT">리뷰</span>
+                </div>
+                <div id="review_contents">
+                    <div class="reviewBox">
+                        <span>getupngo</span>
+                        <span class="review_content">
+                            {% for review in reviewList %}
+                                <p>{{review.contents}}</p>
+                            {% endfor %}
+                        </span>
+                    </div>
+                </div>
+>>>>>>> origin/getupngo1
 
             </div>
         </section>

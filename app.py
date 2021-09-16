@@ -87,6 +87,19 @@ def search():
 
     return jsonify({'msg':f'{city_receive} 지역 검색 완료!'})
 
+# 리뷰값 받는 부분
+@app.route('/posting', methods =['POST'])
+def post() :
+    review_receive = request.form['review_give']
+
+    doc = {
+        'review':review_receive
+    }
+
+    db.review.insert_one(doc)
+
+    return jsonify({'msg': '저장 완료!'})
+
 
 @app.route('/init', methods=['POST'])
 def init():
@@ -152,11 +165,15 @@ def charge():
 
     return render_template("charge_detail.html", charge = charge, reviewList = reviewList)
 
+# @app.route('/review', methods=['GET'])
+# def listing() :
+#     reviews = db.review.find({},{'_id':False})
+#
+#     return jsonify({'all_reviews': reviews})
 
 @app.route('/review', methods=['POST'])
 def review_save():
-
-    #token_receive = request.cookies.get('mytoken')
+    token_receive = request.cookies.get('mytoken')
     chargeId = request.form["chargeId"]
     rate = request.form["rate"]
     contents = request.form["contents"]
@@ -219,5 +236,3 @@ def review_delete():
 
 if __name__ == '__main__':
     app.run('localhost', port=5000, debug=True)
-
-
