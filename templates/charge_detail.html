@@ -50,13 +50,92 @@
         }
 
         .review-making-box {
-            background-color: #3B666B;
-            width: 100%;
+            background-color: #BFDDE0;
+            width: 50%;
             margin: auto;
             padding: 50px;
         }
+
+        .wrap {
+            background-color: RGBA(232, 52, 78, 0.2);
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        .review_contentT{
+            margin-left: 100px;
+        }
+
+        .review_content{
+            margin-left: 80px;
+        }
+
+
+
     </style>
+
     <script>
+       // $(document).ready(function(){
+       //    showReviews();
+       //  });
+
+
+        // function posting(){
+        //     let review = $('#textarea-post').val()
+        //
+        //     $.ajax({
+        //         type: "POST",
+        //         url:"/posting",
+        //         data:{review_give:review},
+        //         success: function(response){
+        //             alert(response["msg"])
+        //             window.location.reload()
+        //         }
+        //     })
+        // }
+
+        function posting(){
+            let contents_give = $('#textarea-post').val()
+            let chargeId_give = '61418daaea7935f5d7df32fb'
+            let rate_give = '3'
+            let like_give = '2'
+
+            $.ajax({
+                type:"POST",
+                url:"/review",
+                data:{contents:contents_give,chargeId:chargeId_give,rate:rate_give,like:like_give},
+                success: function(response){
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            })
+        }
+        //
+        // function showReviews() {
+        //     $.ajax({
+        //         type:"GET",
+        //         url:"/review",
+        //         data: {},
+        //         success: function(response){
+        //             let reviews = response['all_reviews']
+        //
+        //             for(let i = 0; i < reviews.length; i++){
+        //                 let id = reviews[i]['memberId']
+        //                 let chargeId = reviews[i]['chargeId']
+        //                 let rate = reviews[i]['rate']
+        //                 let contents = reviews[i]['contents']
+        //                 let like = reviews[i]['like']
+        //
+        //                 let temp_html = `<div class="reviewBox">
+        //                 <span>${id}</span>
+        //                 <span class="review_content">${contents}</span>
+        //             </div>`
+        //
+        //                 $('#review_contents').append(temp_html)
+        //             }
+        //         }
+        //     })
+        // }
     </script>
 
 </head>
@@ -74,52 +153,70 @@
 </nav>
 
 <!--change_list.html에서 하나를 선택했을 떄, 선택한 것의 정보에 따라 사진이 나오게 하는 것 -->
-<section class="section">
-    <div class="card">
-        <div class="card-image">
-             <figure class="image is-4by3">
-                 <img class="bnImg" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5174%2F2019%2F01%2F22%2F295309_265529_0734_20190122112444134.jpg&type=a340">
-             </figure>
-        </div>
-        <br>
-
-
-        <div class="row">
-            <div class="col2" id="col2">
-            </div>
-            <br><br>
-        </div>
-        <span class="title" id="title">GS칼텍스 전기차충전소 가든파이브주유소</span>
-        <br><br>
-
-        <span class="address">주소:</span>
-<!--        <span class="detail_address">{{ store.address }}</span>-->
-        <span class="detail_address">서울 송파구 탄천동로 740</span>
-        <br>
-    </div>
-
-</section>
-
-<!--리뷰 쓰기 저장하기-->
-<div class="box review-making-box">
-    <div class="field">
-        <label class="label review-box"><i class="fas fa-pencil-alt"> </i>리뷰 쓰기 </label>
-        <div class="control">
-            <textarea class="textarea" id="textarea-post" placeholder="리뷰를 남겨주세요!"></textarea>
-        </div>
-    </div>
-
-    <div class="field is-grouped">
-        <div class="control">
-            <button id="review-box" onclick="posting()" class="button is-info">저장</button>
-        </div>
-    </div>
-
+<div id = "wrap">
     <section class="section">
-        <div id="post-box" class="container">
+        <div class="card">
+            <div class="card-image">
+                <figure class="image is-4by3">
+                    {% if charge.img == none %}
+                        <img class="bnImg" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5174%2F2019%2F01%2F22%2F295309_265529_0734_20190122112444134.jpg&type=a340">
+                    {% else %}
+                        <img class="bnImg" src="{{charge.img}}">
+                    {% endif %}
 
+                </figure>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col2" id="col2">
+                </div>
+                <br><br>
+            </div>
+            <span class="title" id="title">{{charge.chargeName}}</span>
+            <br><br>
+
+            <span class="address">주소: </span>
+            <span class="detail_address">{{charge.address}}</span>
+            <br>
         </div>
     </section>
+
+    <!--리뷰 쓰기 저장하기-->
+    <div class="box review-making-box">
+        <div class="field">
+            <label class="label review-box"><i class="fas fa-pencil-alt"> </i>리뷰 쓰기 </label>
+            <div class="control">
+                <textarea class="textarea" id="textarea-post" placeholder="리뷰를 남겨주세요!"></textarea>
+            </div>
+        </div>
+
+        <div class="field is-grouped">
+            <div class="control">
+                <button id="review-box" onclick="posting()" class="button is-info">저장</button>
+            </div>
+        </div>
+
+        <section class="section">
+            <div id="post-box" class="container">
+                <div class="reviewBox">
+                    <span>리뷰작성자</span>
+                    <span class="review_contentT">리뷰</span>
+                </div>
+                <div id="review_contents">
+                    <div class="reviewBox">
+                        <span>getupngo</span>
+                        <span class="review_content">
+                            {% for review in reviewList %}
+                                <p>{{review.contents}}</p>
+                            {% endfor %}
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
 </div>
 </body>
 
