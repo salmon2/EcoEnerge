@@ -84,6 +84,19 @@ def search():
 
     return jsonify({'msg':f'{city_receive} 지역 검색 완료!'})
 
+# 리뷰값 받는 부분
+@app.route('/posting', methods =['POST'])
+def post() :
+    review_receive = request.form['review_give']
+
+    doc = {
+        'review':review_receive
+    }
+
+    db.review.insert_one(doc)
+
+    return jsonify({'msg': '저장 완료!'})
+
 
 @app.route('/init', methods=['POST'])
 def init():
@@ -126,7 +139,7 @@ def chargeList():
     json_info = json.dumps(info)
 
 
-    return render_template("dummy_charges.html", info = json_info, chargeList = chargeList)
+    return render_template("chargeList.html", info = json_info, chargeList = chargeList)
 
 @app.route('/charge', methods = ['GET'])
 def charge():
@@ -148,13 +161,18 @@ def charge():
         review['chargeId'] = str(review['chargeId'])
         reviewList.append(review)
 
+    # return jsonify({"charge" : charge, "reviewList" : reviewList})
+    return render_template("charge_detail.html", charge = charge, reviewList = reviewList)
 
-    return render_template("dummy_charge.html", charge = charge, reviewList = reviewList)
 
+# @app.route('/review', methods=['GET'])
+# def listing() :
+#     reviews = db.review.find({},{'_id':False})
+#
+#     return jsonify({'all_reviews': reviews})
 
 @app.route('/review', methods=['POST'])
 def review_save():
-
     token_receive = request.cookies.get('mytoken')
     chargeId = request.form["chargeId"]
     rate = request.form["rate"]
@@ -179,7 +197,8 @@ def review_save():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return jsonify({'result' : 'fail', 'msg' : '리뷰 저장 실패'})
 
-    return redirect(url_for("login"))
+    # return redirect(url_for("charge", id=chargeId))
+    return jsonify({'msg':'리뷰 저장 성공!'})
 
 @app.route('/review/update', methods = ['POST'])
 def review_update():
