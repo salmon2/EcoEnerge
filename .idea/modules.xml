@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/.idea/EcoEnerge.iml" filepath="$PROJECT_DIR$/.idea/EcoEnerge.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/.idea/myminiproject1.iml" filepath="$PROJECT_DIR$/.idea/myminiproject1.iml" />
->>>>>>> f2ada04a7826d26ebcd6d4701f31d7199abd6c5a
+      <module fileurl="file://$PROJECT_DIR$/.idea/EcoEnergy_Day3.iml" filepath="$PROJECT_DIR$/.idea/EcoEnergy_Day3.iml" />
     </modules>
   </component>
 </project>
