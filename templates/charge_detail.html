@@ -71,6 +71,8 @@
 
         .deleteBtn{
             margin-left: 10px;
+            height: 20px;
+            width: 20px;
         }
 
 
@@ -78,20 +80,6 @@
     </style>
 
     <script>
-        // function posting(){
-        //     let review = $('#textarea-post').val()
-        //
-        //     $.ajax({
-        //         type: "POST",
-        //         url:"/posting",
-        //         data:{review_give:review},
-        //         success: function(response){
-        //             alert(response["msg"])
-        //             window.location.reload()
-        //         }
-        //     })
-        // }
-
         function posting(){
             let contents_give = $('#textarea-post').val()
             let rate_give = '3'
@@ -113,48 +101,48 @@
             })
         }
 
-        function delete_one(){
-            console.log()
+        function delete_one(reviewID){
+            console.log("DELETE")
             $.ajax({
                 type:'POST',
                 url:"/review/delete",
                 data:{
-                    _id:'id'
+                    _id : reviewID
                 },
                 success: function (response) {
-                    alert('삭제완료')
+                    alert('삭제 완료')
                     window.location.reload()
                 }
 
             })
 
         }
-        //
-        // function showReviews() {
-        //     $.ajax({
-        //         type:"GET",
-        //         url:"/review",
-        //         data: {},
-        //         success: function(response){
-        //             let reviews = response['all_reviews']
-        //
-        //             for(let i = 0; i < reviews.length; i++){
-        //                 let id = reviews[i]['memberId']
-        //                 let chargeId = reviews[i]['chargeId']
-        //                 let rate = reviews[i]['rate']
-        //                 let contents = reviews[i]['contents']
-        //                 let like = reviews[i]['like']
-        //
-        //                 let temp_html = `<div class="reviewBox">
-        //                 <span>${id}</span>
-        //                 <span class="review_content">${contents}</span>
-        //             </div>`
-        //
-        //                 $('#review_contents').append(temp_html)
-        //             }
-        //         }
-        //     })
-        // }
+
+                function update_one(reviewMID){
+            console.log("UPDATE")
+
+            let contents_give = $('#textarea-post').val()
+            let rate_give = '3'
+            let like_give = '2'
+
+            $.ajax({
+                type:'POST',
+                url:"/review/update",
+                data:{
+                    _id : reviewMID,
+                    chargeId : `{{charge._id}}`,
+                    rate : rate_give,
+                    contents : contents_give,
+                    like: like_give
+                },
+                success: function (response) {
+                    alert('업데이트 완료')
+                    window.location.reload()
+                }
+
+            })
+
+        }
     </script>
 
 </head>
@@ -221,12 +209,19 @@
                     <span>리뷰작성자</span>
                     <span class="review_contentT">리뷰</span>
                 </div>
+                {% for user in users %}
+                <span>{{user.username}}</span>
+                {% endfor %}
                 {% for review in reviewList %}
                 <div class="reviewBox">
                     <span>리뷰작성자</span>
                     <span class="review_contentT" id="1">{{review.contents}}</span>
-                    <button id="{{ 'review_id' + charge._id }}" class="button is-ghost deleteBtn" onclick="delete_one()">
+                        <!--        db의 다른아이디 값을 진자템플릿으로 가져오는 부분            -->
+                    <button id="{{review._id}}" class="button is-ghost deleteBtn" onclick="delete_one(this.id)">
                         <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                    <button id="{{review.memberId}}" class="button is-ghost deleteBtn" onclick="update_one(this.id)">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </button>
                 </div>
                 {% endfor %}
