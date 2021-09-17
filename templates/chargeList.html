@@ -28,7 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <style>
 
-            .hero{
+.hero{
                 position: absolute;
                 width: 100%;
                 height: 70px;
@@ -58,11 +58,8 @@
 
             .mainImgDiv{
                 border-width: 3px;
-                margin-bottom: 50px;
-                margin-top : 50px;
-
+                border-style: ridge;
                 border-color: white white black white;
-                box-shadow: 3px 3px 3px 3px gray;
             }
 
             .mainImg{
@@ -103,6 +100,7 @@
                 height: 30px;
                 width: 200px;
                 text-align: center;
+                font-size: 13px;
             }
 
             .select2{
@@ -111,7 +109,10 @@
                 width: 150px;
                 text-align: center;
                 margin-left: 10px;
+                font-size: 13px;
             }
+
+          
 
             .sBtn{
                 margin-left: 10px;
@@ -186,7 +187,14 @@
               margin-bottom: 40px;
             }
   
-
+            .bnTitle{
+                position: absolute;
+                font-family: 'Nanum Brush Script', cursive;
+                width: 500px;
+                font-size: 20px;
+                left: 110px;
+                top: 40px;
+            }
     </style>
 
     <script>
@@ -197,27 +205,37 @@
         function nexPage(page){
           window.location.href = `/chargeList?page=${page}&key={{key}}`
         }
+
+        function page(){
+          window.location.href = `/`
+        }
+
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃 완료!')
+            window.location.href="/login"
+        }
+
     </script>
 </head>
 <body>
-    <div>
-        <section class="hero is-small is-success">
-          <div class="hero-body">
-              <img class="bnImg" src="http://t1.daumcdn.net/liveboard/prismtv/55253c0eb8e74ff6b00459fa5e08a80d.jpg">
-            <p class="bnTitle">
-                전기차 충전소| EcoEnergy
-                <i class="fa fa-leaf" aria-hidden="true"></i>
-            </p>
+  <div>
+    <section class="hero is-small is-success">
+      <div class="hero-body">
+          <img class="bnImg" onclick = "page()" src="http://t1.daumcdn.net/liveboard/prismtv/55253c0eb8e74ff6b00459fa5e08a80d.jpg">
+        <p class="bnTitle">전기차 충전소| EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i></p>
+          <div class="btns">
+              <button class="button is-primary is-light btn_sign_out" onclick="sign_out()"><strong>로그아웃&nbsp&nbsp<i class="fa fa-sign-in" aria-hidden="true"></i></strong></button>
           </div>
-        </section>
+      </div>
+      </section>
+  </div>
+<div class="mainImgDiv" >
+    <img class="mainImg" src=http://t1.daumcdn.net/liveboard/prismtv/55253c0eb8e74ff6b00459fa5e08a80d.jpg>
+    <div>
+    <span class="mainTxt">EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i> 충전소</span>
     </div>
-
-    <div class="mainImgDiv" >
-        <img class="mainImg" src=http://t1.daumcdn.net/liveboard/prismtv/55253c0eb8e74ff6b00459fa5e08a80d.jpg>
-        <div>
-            <span class="mainTxt">EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i> 충전소</span>
-        </div>
-    </div>
+</div>
 
     <div id = "chargeListWrap">
     <div class="row row-cols-1 row-cols-md-3 g-4" >
