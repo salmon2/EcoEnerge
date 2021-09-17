@@ -178,6 +178,10 @@
             .sBtn{
               width: 50%;
               margin: auto;
+              transition: all 0.2s linear;
+            }
+            .sBtn:hover{
+                transform: scale(1.2);
             }
 
             #chargeListWrap{
@@ -191,6 +195,13 @@
                 font-size: 20px;
                 left: 110px;
                 top: 40px;
+            }
+            .imgSize{
+                transition: all 0.2s linear;
+                border-radius: 20px 20px 0px 0px;
+            }
+            .imgSize:hover{
+                transform: scale(1.1);
             }
     </style>
 
@@ -239,7 +250,7 @@
         {% set  idx = [] %}
         {% for charge in chargeList %}
         <div class="col section">
-            <div class="card imgSize">
+            <div class="card imgSize" onclick="search(this.id)" id="{{ charge._id }}">
                     {% if charge.img == none %}
                         <img class="card-img-top" src="../static/default_charge{{idx|length}}.jpg">
                     {% else %}

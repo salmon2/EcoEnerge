@@ -40,8 +40,8 @@ def sign_in():
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
 
-    print("username_receive", username_receive)
-    print("password_receive", password_receive)
+    #print("username_receive", username_receive)
+    #print("password_receive", password_receive)
 
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'username': username_receive, 'password': pw_hash})
@@ -131,7 +131,7 @@ def chargeList():
     for charge in data:
         charge["_id"] = str(charge["_id"])
         chargeList.append(charge)
-        print(charge)
+        #print(charge)
 
     return render_template("chargeList.html", key = key, currentPage = page, maxPage = last_page_num, chargeList = chargeList)
 
@@ -188,7 +188,7 @@ def review_save():
     return jsonify({'result' : 'success', 'msg' : '리뷰 저장 성공'})
 
 def checkUser(reviewId, token_receive):
-    print("check")
+    #print("check")
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
@@ -196,8 +196,8 @@ def checkUser(reviewId, token_receive):
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError, Exception ):
         return False
 
-    print(str(user_info['_id']))
-    print("review info userId ", review)
+    #print(str(user_info['_id']))
+    #print("review info userId ", review)
 
     if  str(user_info['_id']) == str(review['memberId']):
         return True
@@ -206,7 +206,7 @@ def checkUser(reviewId, token_receive):
 
 @app.route('/review/update', methods = ['POST'])
 def review_update():
-    print("update")
+    #print("update")
     review_id = request.form["_id"]
     chargeId = request.form["chargeId"]
     token_receive = request.cookies.get('mytoken')
@@ -215,7 +215,7 @@ def review_update():
     contents = request.form["contents"]
 
     if checkUser(review_id, token_receive):
-        print("check success")
+        #print("check success")
         try:
             db.review.update({"_id": ObjectId(review_id)}, {"$set": {
                                                                     "rate": rate,
@@ -234,12 +234,12 @@ def review_update():
 
 @app.route('/review/delete', methods = ['POST'] )
 def review_delete():
-    print("delete")
+    #print("delete")
     reviewId = request.form["_id"]
     token_receive = request.cookies.get('mytoken')
     
     if checkUser(reviewId, token_receive):
-        print("check success")
+        #print("check success")
         try:
             db.review.delete_one({"_id": ObjectId(reviewId)})
         except Exception as e:
