@@ -132,16 +132,8 @@ def chargeList():
         charge["_id"] = str(charge["_id"])
         chargeList.append(charge)
         print(charge)
-    
-    #python document to json
-    info = {
-        'size': size,
-        'currentPage': page,
-        'maxPage': last_page_num,
-    }
-    json_info = json.dumps(info)
 
-    return render_template("chargeList.html", info = json_info, chargeList = chargeList)
+    return render_template("chargeList.html", key = key, currentPage = page, maxPage = last_page_num, chargeList = chargeList)
 
 @app.route('/charge', methods = ['GET'])
 def charge():

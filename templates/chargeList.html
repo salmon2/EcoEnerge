@@ -150,6 +150,14 @@
                 max-width: 750px;
 
             }
+            #chargeListWrap{
+              margin-bottom: 30px;
+            }
+            .pagination{
+              width: 100px;
+              margin:auto;
+              margin-bottom: 100px;
+            }
     </style>
 
     <script>
@@ -157,6 +165,10 @@
             window.location.href = `/charge?id=${charge_Id}`
         }
 
+        function nexPage(page){
+          console.log("nexPage")
+          window.location.href = `/chargeList?page=${page}&key={{key}}`
+        }
     </script>
 </head>
 <body>
@@ -179,7 +191,7 @@
         </div>
     </div>
 
-
+    <div id = "chargeListWrap">
     <div class="row row-cols-1 row-cols-md-3 g-4" >
         {% set  idx = [] %}
         {% for charge in chargeList %}
@@ -199,8 +211,26 @@
         </div>
             {% set idx = idx.append(1) %}
         {% endfor %}
-
-
     </div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+            {% for i in range(maxPage) %}
+              <li  class="page-item"><a id = "{{i + 1}}" class="page-link" onclick="nexPage(this.id)">{{i+1}}</a></li>
+            {% endfor %}
+            <li class="page-item">
+  
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    
 </body>
 </html>
