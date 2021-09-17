@@ -114,7 +114,7 @@ def chargeList():
     key = request.args.get('key')
     # print("page", page)
     # print("key", key)
-    size = 9
+    size = 6
     try:
         # board컬럭션에 있는 모든 데이터를 가져옴
         data = db.chargeList.find({"address":{"$regex": key}}).skip((page - 1) * size).limit(size)
