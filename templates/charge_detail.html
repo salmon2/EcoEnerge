@@ -15,6 +15,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <!-- Font Awesome CSS -->
@@ -27,9 +28,24 @@
     <script src="https://kit.fontawesome.com/fc2bb77ae0.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
+    <!-- Google font CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nanum+Brush+Script&family=Song+Myung&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
     <style>
         body {
+<<<<<<< HEAD
             background-color: rgb(000, 153, 153);
+=======
+            /*background-color: rgb(000, 153, 153);*/
+            background-color: whitesmoke;
+>>>>>>> origin/getupngo1
             min-height: 100vh;
 		    padding-top: 3.25rem;
         }
@@ -42,6 +58,20 @@
 
         .is-sparta {
             color: #e8344e !important;
+<<<<<<< HEAD
+        }
+
+        .button.is-sparta {
+            background-color: #e8344e;
+            border-color: transparent;
+            color: #fff !important;
+        }
+
+        .button.is-sparta.is-outlined {
+            background-color: transparent;
+            border-color: #e8344e;
+            color: #e8344e !important;
+=======
         }
 
         .button.is-sparta {
@@ -57,8 +87,12 @@
         }
 
         .modal-content {
-            width: 600px;
+            width: 750px;
             max-width: 80%;
+            background-color: white;
+            border-radius: 10px 10px 10px 10px;
+
+
         }
 
         input::-webkit-calendar-picker-indicator {
@@ -72,18 +106,110 @@
 
             margin-left: 65px;
             margin-top: 50px;
+            border-radius: 10px;
+            transition: all 0.2s linear;
+>>>>>>> origin/getupngo1
+        }
+        .card-img-top:hover{
+            transform: scale(1.1);
+
+<<<<<<< HEAD
+        .modal-content {
+            width: 600px;
+            max-width: 80%;
+        }
+
+        input::-webkit-calendar-picker-indicator {
+            display: none;
+=======
+        }
+        .card{
+            /*background-color: rgb(255, 204, 204);*/
+            background-color: white;
+            opacity: 0.8;
+            border-radius: 30px;
+            transition: all 0.2s linear;
+        }
+        .card:hover{
+            transform: scale(1.05);
+        }
+
+        .media{
+            margin-bottom: 30px;
+>>>>>>> origin/getupngo1
+        }
+        .updateBtn{
+
+<<<<<<< HEAD
+        .card-img-top{
+            object-fit:cover;
+            width:80%;
+            height:80%;
+
+            margin-left: 65px;
+            margin-top: 50px;
         }
         .card{
             background-color: rgb(255, 204, 204);
         }
         .media{
             margin-bottom: 30px;
-        }
-        .updateBtn{
-
+=======
             height: 20px;
             width: 20px;
+>>>>>>> origin/getupngo1
         }
+
+        .card-title{
+            display: block;
+            text-align: center;
+            /*font-family: 'Nanum Brush Script', cursive;*/
+            font-family: 'Song Myung', serif;
+            font-size: 50px;
+        }
+
+        .card-text{
+            display: block;
+            text-align: center;
+            font-family: 'Song Myung', serif;
+            font-size: 25px;
+        }
+
+        #reviewbox{
+            border-radius: 20px 20px 0px 0px;
+            transition: all 0.2s linear;
+        }
+        #reviewbox:hover{
+            transform: scale(1.1);
+        }
+
+        .updateBtn{
+            width: 25px;
+            height: 25px;
+        }
+
+        .textBox{
+            transition: all 0.2s linear;
+        }
+        .textBox:hover{
+            transform: scale(1.1);
+        }
+        .media-left{
+            /*font-family: 'Song Myung', serif;*/
+            font-family: 'Do Hyeon', sans-serif;
+        }
+        .media-contents{
+            /*font-family: 'East Sea Dokdo', cursive;*/
+            /*font-family: 'Song Myung', serif;*/
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 20px;
+        }
+
+
+
+
+
+
 
 
 
@@ -131,7 +257,11 @@
             })
 
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> origin/getupngo1
         let reviewId;
         function update(){
             console.log("update")
@@ -160,7 +290,11 @@
             });
         }
 
+<<<<<<< HEAD
        
+=======
+
+>>>>>>> origin/getupngo1
         function setReviewId(id){
             reviewId = id;
             console.log(reviewId);
@@ -184,6 +318,7 @@
     <!-- charge Detail -->
     <section class="section">
         <div class="card">
+<<<<<<< HEAD
 
             {% if charge.img == none %}
                 <img class="card-img-top" src="../static/default_charge{{ range(0, 9) | random }}.jpg">
@@ -230,6 +365,52 @@
             </div>
             
 
+=======
+            {% if charge.img == none %}
+                <img class="card-img-top" src="../static/default_charge01.jpg"
+            {% else %}
+                <img  class="card-img-top"src="{{charge.img}}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title"><strong>{{charge.chargeName}}</strong></h5>
+                <p class="card-text">{{charge.address}}</p>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- review List -->
+    <section class="section">
+            <div id="post-box" class="container">
+                {% for review  in reviewList %}
+                    <div class="box" id="reviewbox">
+
+                        <article class="media">
+                            <figure class="media-left" style="align-self: center">
+                                <strong>{{review.writer}}:</strong>
+                            </figure>
+                            <div class="media-contents">
+                                <div class="content">
+                                    <p>
+                                        {{review.contents}}
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <button id = "{{review._id}}" type="button" class="btn btn-primary" onclick= 'delete_one("{{review._id}}")'>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+
+                        <button id = "{{review._id}}" type="button" class="btn btn-primary updateBtn"  onclick=' setReviewId("{{review._id}}"); $("#modal-update").addClass("is-active")'>
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+>>>>>>> origin/getupngo1
 
             <!-- 입력 칸 -->
             <section class="section">
@@ -238,7 +419,11 @@
                     <div class="media-content">
                         <div class="field">
                             <p class="control">
+<<<<<<< HEAD
                                   <input id="input-post" class="input is-rounded" placeholder="리뷰를 작성해 주세요" onclick= '$("#modal-post").addClass("is-active"); '>                
+=======
+                                  <input id="input-post" class="input is-rounded textBox" placeholder="리뷰를 작성해 주세요" onclick= '$("#modal-post").addClass("is-active"); '>
+>>>>>>> origin/getupngo1
                             </p>
                         </div>
                     </div>
@@ -253,17 +438,30 @@
                                 <div class="media-content">
                                     <div class="field">
                                         <p class="control">
+<<<<<<< HEAD
                                             <textarea id="textarea-post" class="textarea"
                                                       placeholder="이 충전소는 어떤가요?"></textarea>
+=======
+                                                <textarea id="textarea-post" class="textarea"
+                                                          placeholder="이 충전소는 어떤가요?"></textarea>
+>>>>>>> origin/getupngo1
                                         </p>
                                     </div>
                                     <nav class="level is-mobile">
                                         <div class="level-left">
+<<<<<<< HEAD
     
                                         </div>
                                         <div class="level-right">
                                             <div class="level-item">
                                                 <a class="button is-sparta"  onclick = "posting()">포스팅하기</a>
+=======
+
+                                        </div>
+                                        <div class="level-right">
+                                            <div class="level-item reviewUp">
+                                                <a class="button is-sparta"  onclick = "posting()">리뷰등록</a>
+>>>>>>> origin/getupngo1
                                             </div>
                                             <div class="level-item">
                                                 <a class="button is-sparta is-outlined"
