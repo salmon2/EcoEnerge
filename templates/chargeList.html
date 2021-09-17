@@ -166,7 +166,6 @@
         }
 
         function nexPage(page){
-          console.log("nexPage")
           window.location.href = `/chargeList?page=${page}&key={{key}}`
         }
     </script>
@@ -224,7 +223,6 @@
               <li  class="page-item"><a id = "{{i + 1}}" class="page-link" onclick="nexPage(this.id)">{{i+1}}</a></li>
             {% endfor %}
             <li class="page-item">
-  
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
