@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Webpage Title -->
+    <title>Detail | EcoEnergy</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <meta property="og:title" content="EcoEnergy"/>
+    <meta property="og:description" content="EcoEnergy충전소에서 서울의 전기 자동차 위치를 찾으세요!"/>
+    <meta property="og:image" content="{{ url_for('static', filename='ogimg.png') }}"/>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <script src="https://kit.fontawesome.com/fc2bb77ae0.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <style>
+
+          .hero{
+              position: absolute;
+              width: 100%;
+              height: 70px;
+
+            }
+
+            .bnImg{
+                height: 70px;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+            }
+
+            .bnTitle{
+                position: absolute;
+                font-family: 'Gugi', cursive;
+                width: 500px;
+                font-size: 20px;
+                left: 110px;
+                top: 40px;
+            }
+
+            .btns{
+                display: block;
+                text-align: right;
+            }
+
+            .mainImgDiv{
+                border-width: 3px;
+                border-style: ridge;
+                border-color: white white black white;
+            }
+
+            .mainImg{
+                display: block;
+                position: relative;
+                width: 600px;
+                height: 300px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 70px;
+                opacity: 0.5;
+            }
+
+            .mainTxt{
+                display: block;
+                font-family: 'Gaegu', cursive;
+                text-align: center;
+                font-size: 100px;
+                margin-bottom: 50px;
+            }
+
+            .lowerTitle{
+                margin-top: 50px;
+                font-family: 'Gaegu', cursive;
+                text-align: center;
+                font-size: 40px;
+            }
+
+            .selectLo{
+                margin-top: 50px;
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+
+            .select1{
+                color: gray;
+                height: 30px;
+                width: 200px;
+                text-align: center;
+                font-size: 13px;
+            }
+
+            .select2{
+                color: gray;
+                height: 30px;
+                width: 150px;
+                text-align: center;
+                margin-left: 10px;
+                font-size: 13px;
+            }
+
+            .sBtn{
+                margin-left: 10px;
+                height: 30px;
+            }
+
+            .wrap{
+                position: relative;
+                padding-top: 50px;
+                padding-bottom: 95px;
+
+            }
+            .wrap::after{
+                background:url(
+                  
+                ../static/grass.jpg) no-repeat; opacity:0.5!important; top:0; left:0; position:absolute; background-size:100%; z-index:-1; content:''; width:100%; height:100%;
+            }
+
+            
+
+
+            .section {
+                padding: 1rem 1.5rem;
+                max-width: 750px;
+
+            }
+
+            .pagination{
+              width: 150px;
+              margin:auto;
+              margin-bottom: 100px;
+            }
+            .page-item{
+              width : 100px;
+            }
+            .card-title{
+              font-family: 'Jua', sans-serif;
+              font-size: 30px;
+              margin:auto;
+              width:100%;
+              text-align: center; 
+            }
+
+            .col{
+              height: 600px;
+            }
+
+            .card{
+                width: 700px;
+                height : 100%;
+            }
+
+            .card-img-top {
+                object-fit: cover;
+                width: 80%;
+                height: 60%;
+                margin: auto;
+
+                /*margin-left: 50px;*/
+                margin-top: 50px;
+                margin-bottom: 20px;
+            }
+
+
+            .sBtn{
+              width: 50%;
+              margin: auto;
+              transition: all 0.2s linear;
+            }
+            .sBtn:hover{
+                transform: scale(1.2);
+            }
+
+            #chargeListWrap{
+              margin-bottom: 40px;
+            }
+  
+            .bnTitle{
+                position: absolute;
+                font-family: 'Nanum Brush Script', cursive;
+                width: 500px;
+                font-size: 20px;
+                left: 110px;
+                top: 40px;
+            }
+            .imgSize{
+                transition: all 0.2s linear;
+            }
+            .imgSize:hover{
+                transform: scale(1.1);
+            }
+    </style>
+
+    <script>
+        function search(charge_Id) {
+            window.location.href = `/charge?id=${charge_Id}`
+        }
+
+        function nexPage(page){
+          window.location.href = `/chargeList?page=${page}&key={{key}}`
+        }
+
+        function page(){
+          window.location.href = `/`
+        }
+
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃 완료!')
+            window.location.href="/login"
+        }
+
+    </script>
+</head>
+<body>
+  <div>
+    <section class="hero is-small is-success">
+      <div class="hero-body">
+          <img class="bnImg" onclick = "page()" src="../static/icon1.jpg">
+        <p class="bnTitle">전기차 충전소| EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i></p>
+          <div class="btns">
+              <button class="button is-primary is-light btn_sign_out" onclick="sign_out()"><strong>로그아웃&nbsp&nbsp<i class="fa fa-sign-in" aria-hidden="true"></i></strong></button>
+          </div>
+      </div>
+      </section>
+  </div>
+<div class="mainImgDiv" >
+    <img class="mainImg" src="../static/icon1.jpg">
+    <div>
+    <span class="mainTxt">EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i> 충전소</span>
+    </div>
+</div>
+
+    <div id = "chargeListWrap">
+    <div class="row row-cols-1 row-cols-md-3 g-4" >
+        {% set  idx = [] %}
+        {% for charge in chargeList %}
+        <div class="col section">
+            <div class="card imgSize">
+                    {% if charge.img == none %}
+                        <img class="card-img-top" src="../static/default_charge{{idx|length}}.jpg">
+                    {% else %}
+                        <img class="card-img-top" src="{{charge.img}}">
+                    {% endif %}
+                <button class="sBtn button is-success is-light" onclick="search(this.id)" id="{{ charge._id }}">
+                    상세&nbsp<i class="fa fa-search " aria-hidden="true"></i></button>
+                <div class="card-body">
+                    <h4 class="card-title">{{ charge.chargeName }}</h4>
+                </div>
+            </div>
+        </div>
+            {% set idx = idx.append(1) %}
+        {% endfor %}
+    </div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination pagination-lg">
+            {% for i in range(maxPage) %}
+              <li  class="page-item"><a id = "{{i + 1}}" class="page-link" onclick="nexPage(this.id)">{{i+1}}</a></li>
+            {% endfor %}
+      </ul>
+    </nav>
+
+    
+</body>
+</html>
