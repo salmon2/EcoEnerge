@@ -21,8 +21,12 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Gaegu&display=swap" rel="stylesheet">
-        <!-- Bootstrap CSS -->
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&family=Nanum+Myeongjo:wght@800&display=swap" rel="stylesheet">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
         <!-- JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -101,6 +105,7 @@
                 height: 30px;
                 width: 200px;
                 text-align: center;
+                font-size: 13px;
             }
 
             .select2{
@@ -109,6 +114,7 @@
                 width: 150px;
                 text-align: center;
                 margin-left: 10px;
+                font-size: 13px;
             }
 
             .sBtn{
@@ -117,9 +123,11 @@
             }
 
             .wrap{
-                position: relative;
+                position: absolute;
                 padding-top: 50px;
                 padding-bottom: 95px;
+                width: 100%;
+
 
             }
             .wrap::after{
@@ -127,18 +135,36 @@
 
             }
 
+            .btn_sign_out{
+                position: relative;
+                display: block;
+                opacity: 0.75;
+                height: 35px;
+                font-family: 'Nanum Brush Script', cursive;
+                font-size: 18px;
+                margin-left:94%;
+
+
+            }
+
         </style>
 
         <script>
-        // 로그인 및 회원가입 페이지로 이동
-        function to_login() {
-            window.location.href="/login"
-        }
+        // // 로그인 및 회원가입 페이지로 이동
+        // function to_login() {
+        //     window.location.href="/login"
+        // }
 
         // 검색 API 연결 및 페이지 이동
         function search() {
             let city = $('#city_name').val()
             window.location.href= `/chargeList?page=1&key=${city}`
+        }
+
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃 완료!')
+            window.location.href="/login"
         }
 
         </script>
@@ -153,19 +179,18 @@
                 전기차 충전소| EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i>
                 </p>
                   <div class="btns">
-                      <button class="button is-primary is-light btn_sign_in" onclick="to_login()"><strong>로그인 <i class="fa fa-sign-in" aria-hidden="true"></i></strong></button>
-                  <button class="button is-primary is-light btn_sign_up" onclick="to_login()"><strong>회원가입 <i class="fa fa-user-plus" aria-hidden="true"></i></strong></button>
+                      <button class="button is-primary is-light btn_sign_out" onclick="sign_out()"><strong>로그아웃&nbsp&nbsp<i class="fa fa-sign-in" aria-hidden="true"></i></strong></button>
                   </div>
               </div>
             </section>
         </div>
-            <div class="mainImgDiv" >
+        <div class="mainImgDiv" >
 
-                   <img class="mainImg" src=http://t1.daumcdn.net/liveboard/prismtv/55253c0eb8e74ff6b00459fa5e08a80d.jpg>
-                <div>
-                <span class="mainTxt">EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i> 충전소</span>
-                </div>
+                <img class="mainImg" src=http://t1.daumcdn.net/liveboard/prismtv/55253c0eb8e74ff6b00459fa5e08a80d.jpg>
+            <div>
+            <span class="mainTxt">EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i> 충전소</span>
             </div>
+        </div>
         <div class = "wrap">
             <div>
                 <div class = "lowerTitle">
@@ -193,22 +218,21 @@
                     <option>광진구</option>
                     <option>노원구</option>
                     <option>도봉구</option>
-                        <option>동대문구</option>
-                        <option>동작구</option>
-                        <option>마포구</option>
-                        <option>서대문구</option>
-                        <option>서초구</option>
-                        <option>성동구</option>
-                        <option>성북구</option>
-                        <option>송파구</option>
-                        <option>양천구</option>
-                        <option>영등포구</option>
-                        <option>용산구</option>
-                        <option>은평구</option>
-                        <option>종로구</option>
-                        <option>중구</option>
-                        <option>중랑구</option>
-
+                    <option>동대문구</option>
+                    <option>동작구</option>
+                    <option>마포구</option>
+                    <option>서대문구</option>
+                    <option>서초구</option>
+                    <option>성동구</option>
+                    <option>성북구</option>
+                    <option>송파구</option>
+                    <option>양천구</option>
+                    <option>영등포구</option>
+                    <option>용산구</option>
+                    <option>은평구</option>
+                    <option>종로구</option>
+                    <option>중구</option>
+                    <option>중랑구</option>
                   </select>
                     <button class="sBtn button is-success is-light" onclick="search()">검색&nbsp<i class="fa fa-search " aria-hidden="true"></i></button>
                 </div>
