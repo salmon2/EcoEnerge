@@ -250,13 +250,13 @@
         {% set  idx = [] %}
         {% for charge in chargeList %}
         <div class="col section">
-            <div class="card imgSize">
+            <div class="card imgSize" onclick="search(this.id)" id="{{ charge._id }}">
                     {% if charge.img == none %}
                         <img class="card-img-top" src="../static/default_charge{{idx|length}}.jpg">
                     {% else %}
                         <img class="card-img-top" src="{{charge.img}}">
                     {% endif %}
-                <button class="sBtn button is-success is-light" onclick="search(this.id)" id="{{ charge._id }}">
+                <button class="sBtn button is-success is-light" >
                     상세&nbsp<i class="fa fa-search " aria-hidden="true"></i></button>
                 <div class="card-body">
                     <h4 class="card-title">{{ charge.chargeName }}</h4>
