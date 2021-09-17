@@ -184,11 +184,13 @@
     <!-- charge Detail -->
     <section class="section">
         <div class="card">
+
             {% if charge.img == none %}
-                <img class="card-img-top" src="../static/default_charge01.jpg"
-            {% else %}    
-                <img  class="card-img-top"src="{{charge.img}}">
+                <img class="card-img-top" src="../static/default_charge{{ range(0, 9) | random }}.jpg">
+            {% else %}
+                <img class="card-img-top" src="{{charge.img}}">
             {% endif %}
+
             <div class="card-body">
                 <h5 class="card-title">{{charge.chargeName}}</h5>
                 <p class="card-text">{{charge.address}}</p>
