@@ -8,11 +8,11 @@
     <meta property="og:title" content="EcoEnergy"/>
     <meta property="og:description" content="EcoEnergy충전소에서 서울의 전기 자동차 위치를 찾으세요!"/>
     <meta property="og:image" content="{{ url_for('static', filename='ogimg.png') }}"/>
-    ​
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    ​
+
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <!-- Font Awesome CSS -->
@@ -21,10 +21,11 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    ​
+
     <script src="https://kit.fontawesome.com/fc2bb77ae0.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <style>
+
             .hero{
                 position: absolute;
                 width: 100%;
@@ -57,7 +58,7 @@
                 border-width: 3px;
                 margin-bottom: 50px;
                 margin-top : 50px;
-            
+
                 border-color: white white black white;
                 box-shadow: 3px 3px 3px 3px gray;
             }
@@ -128,16 +129,37 @@
             .card{
                 width: 600px;
             }
-            .wrap_pagenation{
-                width:100px;
-                margin:auto;
-                margin-top: 50px;
-                margin-bottom: 50px;
+
+            .imgSize {
+                width: 600px;
+                height: 400px;
             }
 
+            .card-img-top {
+                object-fit: cover;
+                width: 80%;
+                height: 70%;
+                margin: auto;
+
+                /*margin-left: 50px;*/
+                /*margin-top: 50px;*/
+            }
+
+            .section {
+                padding: 1rem 1.5rem;
+                max-width: 750px;
+
+            }
     </style>
+
+    <script>
+        function search(charge_Id) {
+            window.location.href = `/charge?id=${charge_Id}`
+        }
+
+    </script>
 </head>
-<body>​
+<body>
     <div>
         <section class="hero is-small is-success">
           <div class="hero-body">
@@ -158,115 +180,27 @@
     </div>
 
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4" >
+        {% set  idx = 0 %}
         {% for charge in chargeList %}
-            <div class="col">
-                <div class="card">
-                <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
+        <div class="col section">
+            <div class="card imgSize">
+                    {% if charge.img == none %}
+                        <img class="card-img-top" src="../static/default_charge{{idx}}.jpg">
+                    {% else %}
+                        <img class="card-img-top" src="{{charge.img}}">
+                    {% endif %}
+                <button class="sBtn button is-success is-light" onclick="search(this.id)" id="{{ charge._id }}">
+                    상세&nbsp<i class="fa fa-search " aria-hidden="true"></i></button>
                 <div class="card-body">
-                    <h4 class="card-title">{{charge.chargeName}}</h4>
-                </div>
+                    <h4 class="card-title">{{ charge.chargeName }}</h4>
                 </div>
             </div>
+        </div>
+        {% set idx = idx + 1 %}
         {% endfor %}
 
 
-
-        <div class="col">
-            <div class="card">
-              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card">
-              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card">
-              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card">
-              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card">
-              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card">
-              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card">
-              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card">
-              <img src="../static/default_charge01.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-              </div>
-            </div>
-          </div>
-
-
     </div>
-    
-    <div class ="wrap_pagenation">
-        <nav aria-label="...">
-            <ul class="pagination">
-              <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
-    </div>
-
-
-
-
 </body>
 </html>
