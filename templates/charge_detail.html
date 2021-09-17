@@ -15,6 +15,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <!-- Font Awesome CSS -->
@@ -27,52 +28,86 @@
     <script src="https://kit.fontawesome.com/fc2bb77ae0.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
+    <!-- Google font CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nanum+Brush+Script&family=Song+Myung&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            font-family: 'Do Hyeon', sans-serif;
+        body {
+            /*background-color: rgb(000, 153, 153);*/
+            background-color: whitesmoke;
+            min-height: 100vh;
+		    padding-top: 3.25rem;
+        }
+
+        .section {
+            padding: 1rem 1.5rem;
+            max-width: 750px;
+            margin: auto;
         }
 
         .is-sparta {
-            color: #3A7734 !important;
+            color: #e8344e !important;
         }
 
+        .button.is-sparta {
+            background-color: #e8344e;
+            border-color: transparent;
+            color: #fff !important;
+        }
 
-        .navbar {
-            font-size: 20px;
-            font-weight: bold;
+        .button.is-sparta.is-outlined {
+            background-color: transparent;
+            border-color: #e8344e;
+            color: #e8344e !important;
+        }
+
+        .modal-content {
+            width: 750px;
+            max-width: 80%;
+            background-color: white;
+            border-radius: 10px 10px 10px 10px;
+
 
         }
 
-        .card {
-            width: 50%;
-            margin: auto;
-            padding: 50px;
+        input::-webkit-calendar-picker-indicator {
+            display: none;
         }
 
-        .review-making-box {
-            background-color: #BFDDE0;
-            width: 50%;
-            margin: auto;
-            padding: 50px;
+        .card-img-top{
+            object-fit:cover;
+            width:80%;
+            height:80%;
+
+            margin-left: 65px;
+            margin-top: 50px;
+            border-radius: 10px;
+            transition: all 0.2s linear;
         }
-        .wrap {
-            background-color: RGBA(232, 52, 78, 0.2);
-            min-height: 100vh;
-            padding-bottom: 50px;
+        .card-img-top:hover{
+            transform: scale(1.1);
+
+        }
+        .card{
+            /*background-color: rgb(255, 204, 204);*/
+            background-color: white;
+            opacity: 0.8;
+            border-radius: 30px;
+            transition: all 0.2s linear;
+        }
+        .card:hover{
+            transform: scale(1.05);
         }
 
-        .review_contentT{
-            margin-left: 100px;
-        }
-
-        .review_content{
-            margin-left: 80px;
-        }
-
-        .deleteBtn{
-            margin-left: 10px;
-            height: 20px;
-            width: 20px;
+        .media{
+            margin-bottom: 30px;
         }
         .updateBtn{
 
@@ -80,27 +115,77 @@
             width: 20px;
         }
 
+        .card-title{
+            display: block;
+            text-align: center;
+            /*font-family: 'Nanum Brush Script', cursive;*/
+            font-family: 'Song Myung', serif;
+            font-size: 50px;
+        }
+
+        .card-text{
+            display: block;
+            text-align: center;
+            font-family: 'Song Myung', serif;
+            font-size: 25px;
+        }
+
+        #reviewbox{
+            border-radius: 20px 20px 0px 0px;
+            transition: all 0.2s linear;
+        }
+        #reviewbox:hover{
+            transform: scale(1.1);
+        }
+
+        .updateBtn{
+            width: 25px;
+            height: 25px;
+        }
+
+        .textBox{
+            transition: all 0.2s linear;
+        }
+        .textBox:hover{
+            transform: scale(1.1);
+        }
+        .media-left{
+            /*font-family: 'Song Myung', serif;*/
+            font-family: 'Do Hyeon', sans-serif;
+        }
+        .media-contents{
+            /*font-family: 'East Sea Dokdo', cursive;*/
+            /*font-family: 'Song Myung', serif;*/
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 20px;
+        }
+
+
+
+
+
+
+
 
     </style>
 
     <script>
         function posting(){
-            let contents_give = $('#textarea-post').val()
-            let rate_give = '3'
-            let like_give = '2'
-
+            console.log("posting")
+            let contents_give = $("#textarea-post").val()
             $.ajax({
                 type:"POST",
                 url:"/review",
                 data:{
                     contents:contents_give,
                     chargeId:`{{charge._id}}`,
-                    rate:rate_give,
-                    like:like_give
                 },
                 success: function(response){
-                    alert("등록 완료")
-                    window.location.reload()
+                    if (response['result'] == 'success') {
+                        $("#modal-post").removeClass("is-active")
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
                 }
             })
         }
@@ -114,44 +199,58 @@
                     _id : reviewID
                 },
                 success: function (response) {
-                    alert('삭제 완료')
-                    window.location.reload()
-                }
+                    if (response['result'] == 'uthorization fail') {
+                        alert(response['msg'])
+                    }
+                    else{
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
 
+                }
             })
 
         }
 
-                function update_one(reviewMID){
-            console.log("UPDATE")
-
-            let contents_give = $('#textarea-post').val()
-            let rate_give = '3'
-            let like_give = '2'
-
+        let reviewId;
+        function update(){
+            console.log("update")
+            console.log(reviewId)
+            let contents_give = $("#textarea-update").val()
             $.ajax({
-                type:'POST',
-                url:"/review/update",
-                data:{
-                    _id : reviewMID,
-                    chargeId : `{{charge._id}}`,
-                    rate : rate_give,
-                    contents : contents_give,
-                    like: like_give
+                type: "POST",
+                url: "/review/update",
+                data: {
+                    _id : reviewId,
+                    contents:contents_give,
+                    chargeId:`{{charge._id}}`,
+                    rate : 0,
+                    like : 0
                 },
                 success: function (response) {
-                    window.location.reload()
+                    if (response['result'] == 'uthorization fail') {
+                        alert(response['msg'])
+                    }
+                    else{
+                        $("#modal-post2").removeClass("is-active")
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
                 }
-
-            })
-
+            });
         }
-    </script>
 
+
+        function setReviewId(id){
+            reviewId = id;
+            console.log(reviewId);
+        }
+
+    </script>
 </head>
 
 <body>
-<!--이거 누르면 메인 페이지로 가게 된다-->
+<!--navigation tab-->
 <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/" style="margin-right: 15px;">
@@ -162,76 +261,142 @@
     </div>
 </nav>
 
-<!--change_list.html에서 하나를 선택했을 떄, 선택한 것의 정보에 따라 사진이 나오게 하는 것 -->
-<div id = "wrap">
+    <!-- charge Detail -->
     <section class="section">
         <div class="card">
-            <div class="card-image">
-                <figure class="image is-4by3">
-                    {% if charge.img == none %}
-                        <img class="bnImg" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5174%2F2019%2F01%2F22%2F295309_265529_0734_20190122112444134.jpg&type=a340">
-                    {% else %}
-                        <img class="bnImg" src="{{charge.img}}">
-                    {% endif %}
-                </figure>
+            {% if charge.img == none %}
+                <img class="card-img-top" src="../static/default_charge01.jpg"
+            {% else %}
+                <img  class="card-img-top"src="{{charge.img}}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title"><strong>{{charge.chargeName}}</strong></h5>
+                <p class="card-text">{{charge.address}}</p>
             </div>
-            <br>
-
-            <div class="row">
-                <div class="col2" id="col2">
-                </div>
-                <br><br>
             </div>
-            <span class="title" id="title">{{charge.chargeName}}</span>
-            <br><br>
-
-            <span class="address">주소: </span>
-            <span class="detail_address">{{charge.address}}</span>
-            <br>
         </div>
     </section>
 
-    <!--리뷰 쓰기 저장하기-->
-    <div class="box review-making-box">
-        <div class="field">
-            <label class="label review-box"><i class="fas fa-pencil-alt"> </i>리뷰 쓰기 </label>
-            <div class="control">
-                <textarea class="textarea" id="textarea-post" placeholder="리뷰를 남겨주세요!"></textarea>
-            </div>
-        </div>
-
-        <div class="field is-grouped">
-            <div class="control">
-                <button id="review-box" onclick="posting()" class="button is-info">저장</button>
-            </div>
-        </div>
-
-        <section class="section">
+    <!-- review List -->
+    <section class="section">
             <div id="post-box" class="container">
-                <div class="reviewBox">
-                    <span>리뷰작성자</span>
-                    <span class="review_contentT">리뷰</span>
-                </div>
-                {% for user in users %}
-                <span>{{user.username}}</span>
-                {% endfor %}
-                {% for review in reviewList %}
-                <div class="reviewBox">
-                    <span>리뷰작성자</span>
-                    <span class="review_contentT" id="1">{{review.contents}}</span>
-                        <!--        db의 다른아이디 값을 진자템플릿으로 가져오는 부분            -->
-                    <button id="{{review._id}}" class="button is-ghost deleteBtn" onclick="delete_one(this.id)">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
-                    <button id="{{review.memberId}}" class="button is-ghost updateBtn" onclick="update_one(this.id)">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                    </button>
-                </div>
+                {% for review  in reviewList %}
+                    <div class="box" id="reviewbox">
+
+                        <article class="media">
+                            <figure class="media-left" style="align-self: center">
+                                <strong>{{review.writer}}:</strong>
+                            </figure>
+                            <div class="media-contents">
+                                <div class="content">
+                                    <p>
+                                        {{review.contents}}
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <button id = "{{review._id}}" type="button" class="btn btn-primary" onclick= 'delete_one("{{review._id}}")'>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+
+                        <button id = "{{review._id}}" type="button" class="btn btn-primary updateBtn"  onclick=' setReviewId("{{review._id}}"); $("#modal-update").addClass("is-active")'>
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 {% endfor %}
             </div>
+
+
+
+            <!-- 입력 칸 -->
+            <section class="section">
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="field">
+                            <p class="control">
+                                  <input id="input-post" class="input is-rounded textBox" placeholder="리뷰를 작성해 주세요" onclick= '$("#modal-post").addClass("is-active"); '>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- modal section -->
+                <div class="modal" id="modal-post">
+                    <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
+                    <div class="modal-content">
+                        <div class="box">
+                            <article class="media">
+                                <div class="media-content">
+                                    <div class="field">
+                                        <p class="control">
+                                                <textarea id="textarea-post" class="textarea"
+                                                          placeholder="이 충전소는 어떤가요?"></textarea>
+                                        </p>
+                                    </div>
+                                    <nav class="level is-mobile">
+                                        <div class="level-left">
+
+                                        </div>
+                                        <div class="level-right">
+                                            <div class="level-item reviewUp">
+                                                <a class="button is-sparta"  onclick = "posting()">리뷰등록</a>
+                                            </div>
+                                            <div class="level-item">
+                                                <a class="button is-sparta is-outlined"
+                                                   onclick='$("#modal-post").removeClass("is-active")'>취소</a>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <button class="modal-close is-large"  aria-label="close" onclick='$("#modal-post").removeClass("is-active")'></button>
+                </div>
+                <div class="modal" id="modal-update">
+                    <div class="modal-background" onclick='$("#modal-update").removeClass("is-active")'></div>
+                    <div class="modal-content">
+                        <div class="box">
+                            <article class="media">
+                                <div class="media-content">
+                                    <div class="field">
+                                        <p class="control">
+                                            <textarea id="textarea-update" class="textarea"
+                                                      placeholder="리뷰를 수정해 주세요"></textarea>
+                                        </p>
+                                    </div>
+                                    <nav class="level is-mobile">
+                                        <div class="level-left">
+    
+                                        </div>
+                                        <div class="level-right">
+                                            <div class="level-item">
+                                                <a class="button is-sparta"  onclick = "update();">수정하기</a>
+                                            </div>
+                                            <div class="level-item">
+                                                <a class="button is-sparta is-outlined"
+                                                   onclick='$("#modal-update").removeClass("is-active")'>취소</a>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <button class="modal-close is-large"  aria-label="close" onclick='$("#modal-update").removeClass("is-active")'></button>
+                </div>
+            </section>
+
+
         </section>
-    </div>
-</div>
+
+
+
+        
+
+
 </body>
 
 </html>
