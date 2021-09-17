@@ -170,10 +170,10 @@ def charge():
 @app.route('/review', methods=['POST'])
 def review_save():
     token_receive = request.cookies.get('mytoken')
+
     chargeId = request.form["chargeId"]
-    rate = request.form["rate"]
     contents = request.form["contents"]
-    like = request.form["like"]
+
 
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
@@ -184,9 +184,8 @@ def review_save():
             "memberId": user_info["_id"],
             "chargeId": ObjectId(chargeId),
 
-            "rate": rate,
+            "writer" : user_info["username"],
             "contents": contents,
-            "like": like
         }
 
         db.review.insert_one(doc)
@@ -194,7 +193,7 @@ def review_save():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return jsonify({'result' : 'fail', 'msg' : '리뷰 저장 실패'})
 
-    return redirect(url_for("charge", id=chargeId))
+    return jsonify({'result' : 'success', 'msg' : '리뷰 저장 성공'})
 
 def checkUser(reviewId, token_receive):
     print("check")
@@ -203,7 +202,7 @@ def checkUser(reviewId, token_receive):
         user_info = db.users.find_one({"username": payload["id"]})
         review = db.review.find_one({'_id': ObjectId(reviewId)})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError, Exception ):
-        return jsonify({'result' : 'fail', 'msg' : '리뷰 수정 실패'})
+        return False
 
     print(str(user_info['_id']))
     print("review info userId ", review)
@@ -212,8 +211,7 @@ def checkUser(reviewId, token_receive):
         return True
     else:
         return False
-    
-    
+
 @app.route('/review/update', methods = ['POST'])
 def review_update():
     print("update")
@@ -223,7 +221,6 @@ def review_update():
 
     rate = request.form["rate"]
     contents = request.form["contents"]
-    like = request.form["like"]
 
     if checkUser(review_id, token_receive):
         print("check success")
@@ -231,27 +228,33 @@ def review_update():
             db.review.update({"_id": ObjectId(review_id)}, {"$set": {
                                                                     "rate": rate,
                                                                     "contents": contents,
-                                                                    "like": like
                                                                     }
                                                                 }
                             )
         except Exception as e:
             print("An exception occurred ::", e)
             return jsonify({'result' : 'fail', 'msg' : '리뷰 수정 실패'})
-    else:
-        return jsonify({'result' : 'authorization fail', 'msg' : '권한 없음'})
 
-    #return jsonify({'result' : 'success', 'msg' : '리뷰 수정 성공'})   
-    return redirect(url_for("charge", id = chargeId))
+        return jsonify({'result' : 'success', 'msg' : '리뷰 수정 완료'})
+    else:
+        return jsonify({'result' : 'authorization fail', 'msg' : '리뷰 수정 권한 없음'})
+    
 
 @app.route('/review/delete', methods = ['POST'] )
 def review_delete():
+    print("delete")
     reviewId = request.form["_id"]
-    try:
-        db.review.delete_one({"_id": ObjectId(reviewId)})
-    except Exception as e:
-        return jsonify({'result' : 'fail', 'msg' : '리뷰 삭제 실패'})
-    return jsonify({'result': 'success', 'msg': '리뷰 삭제 완료!'})
+    token_receive = request.cookies.get('mytoken')
+    
+    if checkUser(reviewId, token_receive):
+        print("check success")
+        try:
+            db.review.delete_one({"_id": ObjectId(reviewId)})
+        except Exception as e:
+            return jsonify({'result' : 'fail', 'msg' : '리뷰 삭제 실패'})
+        return jsonify({'result': 'success', 'msg': '리뷰 삭제 완료!'})
+    else:
+        return jsonify({'result': 'uthorization fail', 'msg': '리뷰 삭제 권한 없음'})
 
 
 if __name__ == '__main__':

@@ -1,3 +1,4 @@
+from types import MemberDescriptorType
 from pymongo import MongoClient
 import requests
 from random import *
@@ -13,18 +14,17 @@ for i in range(total_count):
     for j in range(3):
         memberId = randint(1,4)
         chargeId = chargeList[i]['_id']
-        
-        rate = randint(1,6)
+
+       
         contents =  "contents " + str(k)
-        like = 0
+        writer = "Member " + str(k)
 
         doc = {
             'chargeId' : chargeId,
             'memberId' : memberId,
 
+            "writer" : writer,
             'contents' : contents,
-            'rate' : rate,
-            'like' : like
         }
         db.review.insert_one(doc)
         k = k + 1
