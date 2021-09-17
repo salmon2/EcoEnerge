@@ -179,6 +179,7 @@ def review_save():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
 
+
         doc = {
             "memberId": user_info["_id"],
             "chargeId": ObjectId(chargeId),
@@ -195,27 +196,50 @@ def review_save():
 
     return redirect(url_for("charge", id=chargeId))
 
+def checkUser(reviewId, token_receive):
+    print("check")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        review = db.review.find_one({'_id': ObjectId(reviewId)})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError, Exception ):
+        return jsonify({'result' : 'fail', 'msg' : '리뷰 수정 실패'})
+
+    print(str(user_info['_id']))
+    print("review info userId ", review)
+
+    if  str(user_info['_id']) == str(review['memberId']):
+        return True
+    else:
+        return False
+    
+    
 @app.route('/review/update', methods = ['POST'])
 def review_update():
+    print("update")
     review_id = request.form["_id"]
     chargeId = request.form["chargeId"]
+    token_receive = request.cookies.get('mytoken')
+
     rate = request.form["rate"]
     contents = request.form["contents"]
     like = request.form["like"]
 
-    print("review_id", review_id)
-
-    try:
-        db.review.update({"_id": ObjectId(review_id)}, {"$set": {
-                                                                "rate": rate,
-                                                                "contents": contents,
-                                                                "like": like
+    if checkUser(review_id, token_receive):
+        print("check success")
+        try:
+            db.review.update({"_id": ObjectId(review_id)}, {"$set": {
+                                                                    "rate": rate,
+                                                                    "contents": contents,
+                                                                    "like": like
+                                                                    }
                                                                 }
-                                                            }
-                        )
-    except Exception as e:
-        print("An exception occurred ::", e)
-        return jsonify({'result' : 'fail', 'msg' : '리뷰 수정 실패'})
+                            )
+        except Exception as e:
+            print("An exception occurred ::", e)
+            return jsonify({'result' : 'fail', 'msg' : '리뷰 수정 실패'})
+    else:
+        return jsonify({'result' : 'authorization fail', 'msg' : '권한 없음'})
 
     #return jsonify({'result' : 'success', 'msg' : '리뷰 수정 성공'})   
     return redirect(url_for("charge", id = chargeId))
