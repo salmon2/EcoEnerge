@@ -10,7 +10,7 @@ from pymongo import MongoClient
 import requests
 
 def init_data(region):
-    client = MongoClient('localhost', 27017)
+    client = MongoClient('mongodb://test:test@localhost', 27017)
     db = client.EcoEnerge
 
     #pymongo 연결
@@ -66,6 +66,7 @@ def init_data(region):
                 "x" : x,
                 "y" : y
             }
+            
             db.chargeList.insert_one(doc)
         else:
             print( chargeName, "좌표를 찾지 못했습니다")
