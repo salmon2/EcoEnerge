@@ -3,8 +3,7 @@
 
 ## 1. 제작 기간 & 팀원 소개
 
----
-- 2021. 09/13 ~ 09/18
+- 2021.09/13 ~ 09/18
 - 4인 1조 팀 프로젝트
    - 박기남 : backend review, charge의 CRUD, 5번 항목의 모든 오류 해결
    - 이도행 : charge_detail 반응형 css, 웹 서버 배포
@@ -12,10 +11,9 @@
    - 홍성현 : 충전소 목록 동적 웹페이지 구조 작성과 css
 
 
----
 
 ## 2. 사용 기술
----
+
 - `Backend`
    - Python 3
    - Flask 2.0.1
@@ -27,15 +25,13 @@
    - MongoDB
    - selenium
 
----
+
 ## 3. 실행화면
 [![Video Label](http://img.youtube.com/vi/dmZZtIEX5YM/0.jpg)](https://youtu.be/dmZZtIEX5YM)
 - https://youtu.be/dmZZtIEX5YM
----
 
 ## 4. 핵심기능
 
----
 - 로그인, 회원가입
    - JWT를 이용하여 로그인과 회원가입을 구현하였습니다.
    - 아이디와 닉네임의 중복확인이 가능합니다.
@@ -70,7 +66,7 @@
          - 해결 2, 간단히 method의 파라미터에 jinja를 통하여 id값을 보내주어 해결
    - `charge_detail.html`
       - 문제 1, 리뷰 수정 시 modal 창을 통해 입력, modal 창을 열때 그 리뷰글의 `리뷰id` 값을 저장하여 `backend`로 보내야하는 문제
-         - 해결 1, js를 통하여 modal 클릭시 변수에 id 값을 저장하도록 설정, 모든 리뷰 글은 modal을 클릭 해야하는 전제조건이 있으므로 가능하다.
+         - 해결 1,  js를 통하여 modal 클릭시 변수에 id 값을 저장하도록 설정, 모든 리뷰 글은 modal을 클릭 해야하는 전제조건이 있으므로 가능하다.
 - `backend`
    - 문제 1, mongodb의 id 값은 `ObjectId('12312123')` 형식이며 이를 전처리하여 `frontend`로 보내야 하는 문제
       - 해결, str() 함수를 통하여 해결, 데이터가 배열인 경우에는 새로운 파이썬 리스트를 선언하고 데이터를 저장하여 보내도록 해결
