@@ -7,7 +7,7 @@
 - 4인 1조 팀 프로젝트
    - 박기남 : backend review, charge의 CRUD, 5번 항목의 모든 오류 해결
    - 이도행 : charge_detail 반응형 css, 웹 서버 배포
-   - 황유정 : 로그인 기능 구현, 추가적인 css
+   - 황유정 : user 정보와 로그인 기능 구현, 추가적인 css
    - 홍성현 : 충전소 목록 동적 웹페이지 구조 작성과 css
 
 
