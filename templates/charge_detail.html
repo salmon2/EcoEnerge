@@ -169,6 +169,10 @@
     </style>
 
     <script>
+
+        <!--   리뷰생성기능     -->
+        //textarea의 값을 가져와 contents_give 라는 이름으로 app.py에 전달 후(이 때 charge._id 정보도 같이보냄)
+        //성공시 modal기능 에서 is-active클래스를 삭제해 안보이게 하고 새로고침
         function posting(){
             console.log("posting")
             let contents_give = $("#textarea-post").val()
@@ -189,6 +193,11 @@
             })
         }
 
+        //리뷰 삭제기능
+        //진자템플릿을 이용해 리뷰의 id값을 가져오고
+        //app.py에 _id라는 이름으로 보냄
+        //response의 result값이 uthorization fail이면 해당하는 경고메세지 송출
+        //아니라면 그에 해당하는 메세지 송출 후 새로고침
         function delete_one(reviewID){
             console.log("DELETE")
             $.ajax({
@@ -210,7 +219,22 @@
             })
 
         }
+<<<<<<< HEAD
         
+=======
+
+        //업데이트기능
+        //textarea-update의 벨류를 contents_give라 하고
+        //나머지 데이터도 같이 보냄
+        //성공시 response의 result값이 uthorization fail이라면
+        //해당 경고창 송출, 아닐시에는 modal-post2의 is-active클래스를 삭제하여
+        //안보이게하고 해당하는 경고창 송출
+
+        //++
+        //modal창에서는 해당 review의 id정보를 알 수 없기때문에
+        //delete기능과 다르게 따로 reviewId를 클릭할 때 정의하도록하고
+        //아래 update function에서 사용하기 위해 위에 let reviewId; 기입
+>>>>>>> origin/getupngo1
         let reviewId;
         function update(){
             console.log("update")
@@ -239,7 +263,11 @@
             });
         }
 
+<<<<<<< HEAD
        
+=======
+        //업데이트 버튼 클릭 시 reviewId를 정의
+>>>>>>> origin/getupngo1
         function setReviewId(id){
             reviewId = id;
             console.log(reviewId);
@@ -263,7 +291,11 @@
     <!-- charge Detail -->
     <section class="section">
         <div class="card">
+<<<<<<< HEAD
 
+=======
+            <!--     이미지 없을때 랜덤 견본이미지 삽입       -->
+>>>>>>> origin/getupngo1
             {% if charge.img == none %}
                 <img class="card-img-top" src="../static/default_charge{{ range(0, 9) | random }}.jpg">
             {% else %}
@@ -282,6 +314,10 @@
     <!-- review List -->
     <section class="section">
         <div id="post-box" class="container">
+<<<<<<< HEAD
+=======
+            <!--     review db에서 리뷰작성자,컨텐츠 가져와서 reviewList의 갯수만큼 반복      -->
+>>>>>>> origin/getupngo1
             {% for review  in reviewList %}
                 <div class="box" id="reviewbox">
 
@@ -323,6 +359,7 @@
                     </div>
                 </div>
             </article>
+<<<<<<< HEAD
 
             <!-- modal section -->
             <div class="modal" id="modal-post">
@@ -340,6 +377,25 @@
                                 <nav class="level is-mobile">
                                     <div class="level-left">
 
+=======
+
+            <!-- modal section -->
+            <div class="modal" id="modal-post">
+                <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
+                <div class="modal-content">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="field">
+                                    <p class="control">
+                                            <textarea id="textarea-post" class="textarea"
+                                                      placeholder="이 충전소는 어떤가요?"></textarea>
+                                    </p>
+                                </div>
+                                <nav class="level is-mobile">
+                                    <div class="level-left">
+
+>>>>>>> origin/getupngo1
                                     </div>
                                     <div class="level-right">
                                         <div class="level-item reviewUp">

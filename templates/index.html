@@ -34,9 +34,12 @@
 
         <style>
             .hero{
-                position: absolute;
+                position: relative;
                 width: 100%;
-                height: 70px;
+                height: 71px;
+                border-style: none;
+
+
 
             }
 
@@ -62,10 +65,13 @@
             }
 
             .mainImgDiv{
-                border-width: 3px;
+                display: block;
+                border-width: 1px;
                 border-style: ridge;
                 border-color: white white black white;
             }
+
+
 
             .mainImg{
                 display: block;
@@ -75,15 +81,15 @@
                 margin-left: auto;
                 margin-right: auto;
                 margin-top: 70px;
-                opacity: 0.5;
             }
-
             .mainTxt{
+                position: relative;
                 display: block;
                 font-family: 'Gaegu', cursive;
                 text-align: center;
                 font-size: 100px;
                 margin-bottom: 50px;
+
             }
 
             .lowerTitle{
@@ -131,6 +137,7 @@
 
             }
             .wrap::after{
+<<<<<<< HEAD
                 background:url(../static/grass.jpg) 
                 no-repeat; 
                 opacity:0.5!important; 
@@ -141,6 +148,18 @@
                 z-index:-1; 
                 content:''; 
                 width:100%; 
+=======
+                background:url(../static/grass.jpg)
+                no-repeat;
+                opacity:0.5!important;
+                top:0;
+                left:0;
+                position:absolute;
+                background-size:100%;
+                z-index:-1;
+                content:'';
+                width:100%;
+>>>>>>> origin/getupngo1
                 height:100%;
             }
 
@@ -164,11 +183,12 @@
         // }
 
         // 검색 API 연결 및 페이지 이동
+        //여기서 app.py chargeList로 이동
         function search() {
             let city = $('#city_name').val()
             window.location.href = `/chargeList?page=1&key=${city}`
         }
-
+        //로그아웃 버튼 클릭 -> 쿠키(토큰)삭제 -> 로그인페이지로이동
         function sign_out() {
             $.removeCookie('mytoken', {path: '/'});
             alert('로그아웃 완료!')
@@ -193,8 +213,12 @@
             </section>
         </div>
         <div class="mainImgDiv" >
+<<<<<<< HEAD
 
                 <img class="mainImg" src=../static/icon1.jpg>
+=======
+                <img class="mainImg" src=../static/icon1.png>
+>>>>>>> origin/getupngo1
             <div>
             <span class="mainTxt">EcoEnergy<i class="fa fa-leaf" aria-hidden="true"></i> 충전소</span>
             </div>
